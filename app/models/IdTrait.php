@@ -1,5 +1,7 @@
 <?php
 
+namespace reddit_clone\models;
+
 trait IdTrait
 {
     /**

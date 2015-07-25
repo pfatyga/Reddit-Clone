@@ -1,62 +1,89 @@
 <?php
 
+namespace reddit_clone\controllers;
+
+use reddit_clone\services\UserService;
+
 /**
  * Class UserController
  *
- * Contains CRUD methods for users.
+ * @package reddit_clone\controllers
  */
 class UserController
 {
     /**
-     * Gets the user with the given id.
-     *
-     * @param int $id
-     *
-     * @return null
+     * @var \reddit_clone\services\UserService
      */
-    public function getUser($id)
+    private $userService;
+
+    function __construct()
     {
-        // @todo get user from database
-        return null;
+        $this->userService = new UserService();
     }
 
     /**
-     * Creates user with given values.
+     * Gets a user.
      *
-     * @param array $values
-     *
-     * @return null
+     * @return array|null
      */
-    public function createUser(array $values)
+    public function getUser()
     {
-        // @todo create user
-        return null;
+        $userId = 0;
+        $user = $this->userService->getUser($userId);
+
+        if (is_null($user))
+        {
+            return null;
+        }
+
+        return $user->toArray();
     }
 
     /**
-     * Updates user with given values.
+     * Creates a user.
      *
-     * @param $id
-     * @param array $values
-     *
-     * @return null
+     * @return array|null
      */
-    public function updateUser($id, array $values)
+    public function createUser()
     {
-        // @todo get and update user
-        return null;
+        $values = array();
+        $user = $this->userService->createUser($values);
+
+        if (is_null($user))
+        {
+            return null;
+        }
+
+        return $user->toArray();
     }
 
     /**
-     * Deletes user with given id.
+     * Updates user
      *
-     * @param $id
+     * @return array|null
+     */
+    public function updateUser()
+    {
+        $userId = 0;
+        $values = array();
+        $user = $this->userService->updateUser($userId, $values);
+
+        if (is_null($user))
+        {
+            return null;
+        }
+
+        return $user->toArray();
+    }
+
+    /**
+     * Deletes a user.
      *
      * @return null
      */
     public function deleteUser($id)
     {
-        // @todo delete user
-        return null;
+        $userId = 0;
+        $this->userService->deleteUser($userId);
     }
 }

@@ -1,7 +1,11 @@
 <?php
 
+namespace reddit_clone\models;
+
 /**
  * Class User
+ *
+ * @package reddit_clone\models
  */
 class User
 {
@@ -26,6 +30,18 @@ class User
      * @var bool
      */
     private $isAdmin;
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return array(
+            'username' => $this->getUsername(),
+            'email' => $this->getEmail(),
+            'isAdmin' => $this->getIsAdmin()
+        );
+    }
 
     /**
      * @return string
@@ -84,7 +100,7 @@ class User
     /**
      * @return boolean
      */
-    public function isIsAdmin()
+    public function getIsAdmin()
     {
         return $this->isAdmin;
     }

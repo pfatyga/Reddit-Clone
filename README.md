@@ -13,6 +13,7 @@ Michael Abramo
             controllers/
             docs/ - documentation
             models/
+            services/
             templates/ - template files
                 pages/ - templates for specific pages
                 partials/ - common templates used by multiple pages
