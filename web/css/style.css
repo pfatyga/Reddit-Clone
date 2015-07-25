@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    position: relative;
+    min-height: 100%;
+    margin: 0 auto -40px;
+}
+
+header {
+    min-height: 20px;
+    background: lightblue;
+}
+
+main {
+    padding: 0 0 40px 0;
+    background: #ddd;
+}
+
+footer {
+    position: relative;
+    height: 40px;
+    margin: 0 auto;
+    background: lightblue;
+}
