@@ -24,11 +24,13 @@ class UserController
     /**
      * Gets a user.
      *
+     * @param array $parameters
+     *
      * @return array|null
      */
-    public function getUser()
+    public function getUser(array $parameters)
     {
-        $userId = 0;
+        $userId = $parameters['userId'];
         $user = $this->userService->getUser($userId);
 
         if (is_null($user))
@@ -36,7 +38,8 @@ class UserController
             return null;
         }
 
-        return $user->toArray();
+        http_response_code(200);
+        return json_encode($user->toArray());
     }
 
     /**
@@ -54,17 +57,20 @@ class UserController
             return null;
         }
 
-        return $user->toArray();
+        http_response_code(201);
+        return json_encode($user->toArray());
     }
 
     /**
      * Updates user
      *
+     * @param array $parameters
+     *
      * @return array|null
      */
-    public function updateUser()
+    public function updateUser(array $parameters)
     {
-        $userId = 0;
+        $userId = $parameters['userId'];
         $values = array();
         $user = $this->userService->updateUser($userId, $values);
 
@@ -73,17 +79,23 @@ class UserController
             return null;
         }
 
-        return $user->toArray();
+        http_response_code(200);
+        return json_encode($user->toArray());
     }
 
     /**
      * Deletes a user.
      *
+     * @param array $parameters
+     *
      * @return null
      */
-    public function deleteUser($id)
+    public function deleteUser(array $parameters)
     {
-        $userId = 0;
+        $userId = $parameters['userId'];
         $this->userService->deleteUser($userId);
+
+        http_response_code(204);
+        return '';
     }
 }

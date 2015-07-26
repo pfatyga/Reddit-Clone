@@ -9,6 +9,9 @@ namespace reddit_clone\controllers;
  */
 class HomeController
 {
+    /**
+     * @return string
+     */
     public function getHome()
     {
         global $config;
@@ -21,6 +24,6 @@ class HomeController
 
         $fastTemplate->parse('main', 'main');
 
-        $fastTemplate->FastPrint();
+        return $fastTemplate->fetch();
     }
 }

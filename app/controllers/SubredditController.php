@@ -9,8 +9,13 @@ namespace reddit_clone\controllers;
  */
 class SubredditController
 {
+    /**
+     * @param array $parameters
+     *
+     * @return mixed
+     */
     public function getSubreddit(array $parameters)
     {
-        print $parameters['subreddit'];
+        return $parameters['subreddit'];
     }
 }

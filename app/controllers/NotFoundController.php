@@ -13,6 +13,6 @@ class NotFoundController
     {
         http_response_code(404);
         // @todo make 404 page
-        print '404 not found';
+        return '404 not found';
     }
 }
