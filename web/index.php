@@ -1,5 +1,6 @@
 <?php
 
+// @todo include files dynamically
 include '../vendor/gabarro/class.FastTemplate.php';
 
 include '../app/config.php';
@@ -8,6 +9,7 @@ include '../app/controllers/HomeController.php';
 include '../app/controllers/SubredditController.php';
 include '../app/controllers/NotFoundController.php';
 
+// Get route
 $router = new \reddit_clone\Router();
 $route = $router->getRoute();
 

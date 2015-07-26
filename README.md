@@ -10,20 +10,20 @@ Michael Abramo
 ## Directory Layout
 
         app/ - application files
-            controllers/
+            controllers/ - controller classes
             docs/ - documentation
-            models/
-            services/
-            templates/ - template files
+            models/ - model classes
+            services/ - service classes
+            templates/ - html template files
                 pages/ - templates for specific pages
                 partials/ - common templates used by multiple pages
             config.php - main configuration file
         config/ - php configuration
         scripts/ - maintenance and build scripts
+            serve.sh - runs PHP's built-in webserver
         vendor/ - 3rd party files
         web/ - document root
-            api/ - REST API routes
             css/ - CSS files
             img/ - image files
             js/ - JavaScript files
-            index.php - homepage
+            index.php - entry point
