@@ -2,10 +2,10 @@
 
 ## Team Members
 
-Matt Continisio
-Piotr Fatyga
-Ben Barnett
-Michael Abramo
+* Matt Continisio
+* Piotr Fatyga
+* Ben Barnett
+* Michael Abramo
 
 ## Directory Layout
 
