@@ -26,26 +26,28 @@ class UserController
      *
      * @param array $parameters
      *
-     * @return array|null
+     * @return string|null
      */
     public function getUser(array $parameters)
     {
-        $userId = $parameters['userId'];
-        $user = $this->userService->getUser($userId);
+        $username = $parameters['username'];
+        $user = $this->userService->getUserByUsername($username);
 
         if (is_null($user))
         {
+            header('Content-Type: application/json');
             return null;
         }
 
         http_response_code(200);
+        header('Content-Type: application/json');
         return json_encode($user->toArray());
     }
 
     /**
      * Creates a user.
      *
-     * @return array|null
+     * @return string|null
      */
     public function createUser()
     {
@@ -54,10 +56,12 @@ class UserController
 
         if (is_null($user))
         {
+            header('Content-Type: application/json');
             return null;
         }
 
         http_response_code(201);
+        header('Content-Type: application/json');
         return json_encode($user->toArray());
     }
 
@@ -66,20 +70,23 @@ class UserController
      *
      * @param array $parameters
      *
-     * @return array|null
+     * @return string|null
      */
     public function updateUser(array $parameters)
     {
-        $userId = $parameters['userId'];
+        $username = $parameters['username'];
         $values = array();
-        $user = $this->userService->updateUser($userId, $values);
+        $user = $this->userService->updateUser($username, $values);
 
         if (is_null($user))
         {
+            http_response_code(404);
+            header('Content-Type: application/json');
             return null;
         }
 
         http_response_code(200);
+        header('Content-Type: application/json');
         return json_encode($user->toArray());
     }
 
@@ -88,14 +95,15 @@ class UserController
      *
      * @param array $parameters
      *
-     * @return null
+     * @return string
      */
     public function deleteUser(array $parameters)
     {
-        $userId = $parameters['userId'];
-        $this->userService->deleteUser($userId);
+        $username = $parameters['username'];
+        $this->userService->deleteUser($username);
 
         http_response_code(204);
+        header('Content-Type: application/json');
         return '';
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace reddit_clone\services;
+use reddit_clone\models\User;
 
 /**
  * Class UserService
@@ -18,10 +19,31 @@ class UserService
      *
      * @return \reddit_clone\models\User
      */
-    public function getUser($id)
+    public function getUserById($id)
     {
         // @todo get user from database
         return null;
+    }
+
+    /**
+     * Gets the user with the given username.
+     *
+     * @param string $username
+     *
+     * @return \reddit_clone\models\User
+     */
+    public function getUserByUsername($username)
+    {
+        // @todo get user from database
+        $user = new User();
+        $user
+            ->setId(1)
+            ->setUsername($username)
+            ->setPassword('password')
+            ->setEmail('test@gmail.com')
+            ->setIsAdmin(false);
+
+        return $user;
     }
 
     /**

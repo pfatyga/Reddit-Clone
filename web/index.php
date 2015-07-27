@@ -1,13 +1,18 @@
 <?php
 
 // @todo include files dynamically
-include '../vendor/gabarro/class.FastTemplate.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../vendor/gabarro/class.FastTemplate.php';
 
-include '../app/config.php';
-include '../app/Router.php';
-include '../app/controllers/HomeController.php';
-include '../app/controllers/SubredditController.php';
-include '../app/controllers/NotFoundController.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/config.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/Router.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/models/IdTrait.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/models/User.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/services/UserService.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/controllers/ApiController.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/controllers/HomeController.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/controllers/SubredditController.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/controllers/UserController.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../app/controllers/NotFoundController.php';
 
 // Get route
 $router = new \reddit_clone\Router();

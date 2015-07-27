@@ -42,9 +42,9 @@ class Router
                 $pathPart = $pathParts[$index];
 
                 // If this is a route parameter, set value and continue
-                if (substr($routePathPart, 0, 1) == '{' && substr($routePathPart, -1) == '}')
+                if (substr($routePathPart, 0, 1) == ':')
                 {
-                    $routeParameters[substr($routePathPart, 1, strlen($routePathPart) - 2)] = $pathPart;
+                    $routeParameters[substr($routePathPart, 1, strlen($routePathPart) - 1)] = $pathPart;
                 }
                 else
                 {

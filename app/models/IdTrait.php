@@ -2,6 +2,11 @@
 
 namespace reddit_clone\models;
 
+/**
+ * Trait IdTrait
+ *
+ * @package reddit_clone\models
+ */
 trait IdTrait
 {
     /**

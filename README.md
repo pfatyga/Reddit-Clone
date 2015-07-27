@@ -7,6 +7,12 @@
 * Ben Barnett
 * Michael Abramo
 
+## Run
+
+Run using PHP's built-in web server.
+
+    ./scripts/serve.sh
+
 ## Directory Layout
 
         app/ - application files
