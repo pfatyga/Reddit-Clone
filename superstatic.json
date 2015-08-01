@@ -1,0 +1,6 @@
+{
+  "root": "web",
+  "routes": [
+    {"**": "index.html"}
+  ]
+}

@@ -7,13 +7,7 @@ $config = array(
         'username' => 'user',
         'password' => 'pass'
     ),
-    'templatePath' => 'app/templates',
     'routes' => array(
-        array(
-            'path' => '/',
-            'method' => 'GET',
-            'controller' => '\reddit_clone\controllers\HomeController::getHome'
-        ),
         array(
             'path' => '/api',
             'method' => 'GET',

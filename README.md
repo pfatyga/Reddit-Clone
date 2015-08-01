@@ -15,21 +15,21 @@ Run using PHP's built-in web server.
 
 ## Directory Layout
 
-        app/ - application files
+        server/ - server application files
             controllers/ - controller classes
             docs/ - documentation
             models/ - model classes
             services/ - service classes
-            templates/ - html template files
-                pages/ - templates for specific pages
-                partials/ - common templates used by multiple pages
             config.php - main configuration file
         config/ - php configuration
         scripts/ - maintenance and build scripts
-            serve.sh - runs PHP's built-in webserver
+            ss.sh - runs PHP's built-in webserver
         vendor/ - 3rd party files
         web/ - document root
-            css/ - CSS files
-            img/ - image files
-            js/ - JavaScript files
-            index.php - entry point
+            app/ - Angular application files
+            css/ - CSS stylesheets
+            img/ - images
+            js/ - JavaScript library files
+            index.html - etry point for Angular app
+            index.php - entry point for API
+            router.php entry point when using ss.sh
