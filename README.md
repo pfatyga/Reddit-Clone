@@ -15,16 +15,15 @@ Run using PHP's built-in web server.
 
 ## Directory Layout
 
+        config/ - php configuration
+        scripts/ - maintenance and build scripts
+            ss.sh - runs PHP's built-in webserver
         server/ - server application files
             controllers/ - controller classes
             docs/ - documentation
             models/ - model classes
             services/ - service classes
             config.php - main configuration file
-        config/ - php configuration
-        scripts/ - maintenance and build scripts
-            ss.sh - runs PHP's built-in webserver
-        vendor/ - 3rd party files
         web/ - document root
             app/ - Angular application files
             css/ - CSS stylesheets
