@@ -11,12 +11,18 @@ export class DataService {
     getSubreddit(name) {
         return this.http.get(this.host + '/api/subreddits/' + name)
             .toRx()
-            .map(res => res._body);
+            .map(res => res.json());
     }
 
     getUser(name) {
         return this.http.get(this.host + '/api/users/' + name)
             .toRx()
-            .map(res => res._body); //not sure why the json was in res._body
+            .map(res => res.json());
+    }
+
+    getFrontPage() {
+        return this.http.get(this.host + '/api/posts')
+            .toRx()
+            .map(res => res.json());
     }
 }

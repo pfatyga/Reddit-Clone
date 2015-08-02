@@ -1,9 +1,10 @@
 import {
     ComponentAnnotation as Component,
     ViewAnnotation as View,
+    Inject,
     NgFor
 } from 'angular2/angular2';
-import { RouterLink } from 'angular2/router';
+import { RouteParams, RouterLink } from 'angular2/router';
 import { DataService } from 'app/services/dataService';
 
 // Subreddit component
@@ -16,6 +17,11 @@ import { DataService } from 'app/services/dataService';
     directives: [NgFor, RouterLink]
 })
 export class Subreddit {
-    constructor(dataService:DataService) {
+    constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
+        this.subreddit = routeParams.params.name;
+        dataService.getSubreddit(this.subreddit).subscribe(function (subreddit) {
+            this.name = subreddit.name;
+            this.posts = subreddit.posts;
+        }.bind(this));
     }
 }

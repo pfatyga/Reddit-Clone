@@ -1,3 +1,8 @@
 <div class="subreddit">
-    subreddit
+    <h1> {{ name }} </h1>
+    <ul classs="posts" *ng-for="#post of posts">
+        <li class="post">
+            {{ post.title }}
+        </li>
+    </ul>
 </div>

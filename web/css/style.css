@@ -6,6 +6,10 @@ html, body, .app {
     height: 100%;
 }
 
+ul {
+    list-style-type: none;
+}
+
 .app {
 }
 
@@ -23,6 +27,11 @@ header {
 main {
     padding: 0 0 40px 0;
     background: #ddd;
+}
+
+.post {
+    position: relative;
+    border: solid black 1px;
 }
 
 footer {

@@ -16,7 +16,7 @@ import { DataService } from 'app/services/dataService';
     directives: [NgFor, RouterLink]
 })
 export class Home {
-    constructor(dataService:DataService) {
-
+    constructor(dataService: DataService) {
+        dataService.getFrontPage().subscribe(posts => this.posts = posts);
     }
 }

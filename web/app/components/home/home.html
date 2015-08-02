@@ -1,5 +1,9 @@
 <div class="home">
-    <p>home</p>
-    <a href="#" [router-link]="['/subreddit', {name: 'memes'}]">test link to /r/memes</a>
-    <a href="#" [router-link]="['/user', {name: 'bored'}]">test link to /u/bored</a>
+    <p>Frontpage</p>
+    <ul classs="posts" *ng-for="#post of posts">
+        <li class="post">
+            <section>{{ post.title }}</section>
+            <section>Posted by <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a> to <a href="#" [router-link]="['/subreddit', {name: post.subreddit}]">/r/{{ post.subreddit }}</a></section>
+        </li>
+    </ul>
 </div>
