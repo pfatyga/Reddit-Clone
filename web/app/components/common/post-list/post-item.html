@@ -1,0 +1,4 @@
+<div class="post-item">
+    <section>{{ post.title }}</section>
+    <section>Posted by <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a></section>
+</div>

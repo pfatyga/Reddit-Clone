@@ -1,9 +1,13 @@
-* {
-    margin: 0;
+html, body {
+    font-family: Arial, sans-serif;
 }
 
 html, body, .app {
     height: 100%;
+}
+
+body {
+    background: #eee;
 }
 
 ul {
@@ -16,27 +20,60 @@ ul {
 .wrapper {
     position: relative;
     min-height: 100%;
-    margin: 0 auto -40px;
+    margin: 0 auto -80px;
 }
 
-header {
-    min-height: 20px;
-    background: lightblue;
+.app-header {
+    min-height: 40px;
+    background: #4f8ef7;
+    color: #fff
 }
 
 main {
-    padding: 0 0 40px 0;
-    background: #ddd;
+    padding: 0 0 80px 0;
 }
 
-.post {
+.app-footer {
     position: relative;
-    border: solid black 1px;
-}
-
-footer {
-    position: relative;
-    height: 40px;
+    height: 80px;
     margin: 0 auto;
-    background: lightblue;
+    padding: 8px;
+    text-align: center;
+}
+
+.card {
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
+}
+
+.subreddit-header {
+    padding: 8px;
+}
+
+.content, .sidebar {
+    display: inline-block;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.content {
+    width: 80%;
+    padding: 8px;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 8px;
+}
+
+.post-list {
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
+}
+
+.post-item {
+    border-top: 1px solid #eee;
+    padding: 8px;
 }

@@ -25,28 +25,6 @@ import { httpInjectables } from 'angular2/http';
 // Components
 import { App } from 'app/components/app/app';
 
-/*
-// App component
-@Component({
-    selector: 'app'
-})
-@View({
-      template: `<router-outlet></router-outlet>`,
-      directives: [RouterOutlet]
-})
-@RouteConfig([
-    { path: '/', redirectTo: '/front' },
-    { path: '/front', as: 'front',  component: Front },
-    { path: '/user', as: 'user',  component: User },
-])
-export class App {
-    constructor(router:Router, location:Location) {
-        this.router = router;
-        this.location = location;
-        this.name = 'Alice';
-    }
-}*/
-
 bootstrap(App, [
     httpInjectables,
     routerInjectables,

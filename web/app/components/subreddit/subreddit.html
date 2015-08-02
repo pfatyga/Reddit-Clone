@@ -1,8 +1,10 @@
 <div class="subreddit">
-    <h1> {{ name }} </h1>
-    <ul classs="posts" *ng-for="#post of posts">
-        <li class="post">
-            {{ post.title }}
-        </li>
-    </ul>
+    <header class="subreddit-header">
+        <h1> {{ name }} </h1>
+    </header>
+    <section class="content">
+        <post-list [posts]="posts"></post-list>
+    </section><aside class="sidebar">
+        <div class="card" style="height: 200px;"></div>
+    </aside>
 </div>
