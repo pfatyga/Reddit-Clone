@@ -15,6 +15,7 @@ import {
 // Components
 import { Home } from 'app/components/home/home';
 import { Subreddit } from 'app/components/subreddit/subreddit';
+import { User } from 'app/components/user/user';
 
 // App component
 @Component({
@@ -26,8 +27,9 @@ import { Subreddit } from 'app/components/subreddit/subreddit';
     directives: [RouterOutlet]
 })
 @RouteConfig([
-    { path: '/', as: 'home',  component: Home },
-    { path: '/r/:name', as: 'subreddit',  component: Subreddit }
+    { path: '/',        as: 'home',         component: Home },
+    { path: '/r/:name', as: 'subreddit',    component: Subreddit },
+    { path: '/u/:name', as: 'user',         component: User }
 ])
 export class App {
     constructor(router:Router, location:Location) {
