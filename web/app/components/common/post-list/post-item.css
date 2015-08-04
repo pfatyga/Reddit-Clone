@@ -2,3 +2,15 @@
     border-top: 1px solid #eee;
     padding: 8px;
 }
+
+.post-item > div > .title {
+    margin-bottom: 5px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}

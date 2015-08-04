@@ -1,6 +1,15 @@
 <div class="post-item">
-    <h3>{{ post.title }}</h3>
-    <section>Posted by
-        <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a>
-        to <a href="#" [router-link]="['/subreddit', {name: post.subreddit}]">/r/{{ post.subreddit }}</a></section>
+    <div>
+    <h3 class="title">{{ post.title }}</h3>
+    </div>
+    <div>
+        <section class="right">Posted by
+            <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a>
+            to <a href="#" [router-link]="['/subreddit', {name: post.subreddit}]">/r/{{ post.subreddit }}</a>
+        </section>
+        <section>
+            <div><a href="#" [router-link]="['/comments', { subreddit: post.subreddit, post_id: post.post_id }]"> {{ post.numComments }} comments</a></div>
+        </section>
+    </div>
+
 </div>
