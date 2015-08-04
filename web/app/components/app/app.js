@@ -9,6 +9,7 @@ import {
     RouteConfig,
     RouterOutlet,
     Router,
+    RouterLink,
     Location
 } from 'angular2/router';
 
@@ -24,7 +25,7 @@ import { User } from 'app/components/user/user';
 @View({
     templateUrl: 'app/components/app/app.html',
     styleUrls: ['app/components/app/app.css'],
-    directives: [RouterOutlet]
+    directives: [RouterOutlet, RouterLink]
 })
 @RouteConfig([
     { path: '/',        as: 'home',         component: Home },

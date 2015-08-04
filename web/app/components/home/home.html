@@ -1,9 +1,8 @@
 <div class="home">
-    <p>Frontpage</p>
-    <ul classs="posts" *ng-for="#post of posts">
-        <li class="post">
-            <section>{{ post.title }}</section>
-            <section>Posted by <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a> to <a href="#" [router-link]="['/subreddit', {name: post.subreddit}]">/r/{{ post.subreddit }}</a></section>
-        </li>
-    </ul>
+    <header>
+        <h1>Frontpage</h1>
+    </header>
+    <section class="content">
+        <post-list [posts]="posts"></post-list>
+    </section>
 </div>

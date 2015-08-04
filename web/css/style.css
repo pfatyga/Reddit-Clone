@@ -35,6 +35,11 @@ h5 {
     font-size: 14px;
 }
 
+.content {
+    width: 100%;
+    padding: 8px;
+}
+
 .content, .sidebar {
     display: inline-block;
     vertical-align: top;
