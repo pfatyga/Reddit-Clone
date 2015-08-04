@@ -15,6 +15,7 @@ import { PostItem } from 'app/components/common/post-list/post-item';
 })
 @View({
     templateUrl: 'app/components/common/post-list/post-list.html',
+    styleUrls: ['app/components/common/post-list/post-list.css'],
     directives: [PostItem, NgFor, RouterLink]
 })
 export class PostList {

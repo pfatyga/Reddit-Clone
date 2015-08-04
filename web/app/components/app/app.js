@@ -23,7 +23,7 @@ import { User } from 'app/components/user/user';
 })
 @View({
     templateUrl: 'app/components/app/app.html',
-    //template: `<router-outlet></router-outlet>`,
+    styleUrls: ['app/components/app/app.css'],
     directives: [RouterOutlet]
 })
 @RouteConfig([

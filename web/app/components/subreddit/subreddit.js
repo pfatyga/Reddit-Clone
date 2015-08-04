@@ -16,6 +16,7 @@ import { PostList } from 'app/components/common/post-list/post-list';
 })
 @View({
     templateUrl: 'app/components/subreddit/subreddit.html',
+    styleUrls: ['app/components/subreddit/subreddit.css'],
     directives: [PostList, NgFor, RouterLink]
 })
 export class Subreddit {

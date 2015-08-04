@@ -13,6 +13,7 @@ import { RouteParams, RouterLink } from 'angular2/router';
 })
 @View({
     templateUrl: 'app/components/common/post-list/post-item.html',
+    styleUrls: ['app/components/common/post-list/post-item.css'],
     directives: [NgFor, RouterLink]
 })
 export class PostItem {
