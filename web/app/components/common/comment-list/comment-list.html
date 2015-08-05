@@ -1,0 +1,6 @@
+<ul class="comment-list">
+    <li *ng-for="#comment of comments">
+        <comment-item [comment]="comment"></comment-item>
+        <comment-list [comments]="comment.children"></comment-list>
+    </li>
+</ul>

@@ -6,7 +6,7 @@ import {
 import { RouteParams, RouterLink } from 'angular2/router';
 import { DataService } from 'app/services/dataService';
 
-// import { PostList } from 'app/components/common/post-list/post-list';
+import { CommentList } from 'app/components/common/comment-list/comment-list';
 
 // Comments component
 @Component({
@@ -16,15 +16,22 @@ import { DataService } from 'app/services/dataService';
 @View({
     templateUrl: 'app/components/comments/comments.html',
     styleUrls: ['app/components/comments/comments.css'],
-    directives: [RouterLink]
+    directives: [CommentList, RouterLink]
 })
 export class Comments {
     constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
         this.subreddit = routeParams.params.subreddit;
         this.post_id = routeParams.params.post_id;
-        // dataService.getSubreddit(this.subreddit).subscribe(function (subreddit) {
-        //     this.name = subreddit.name;
-        //     this.posts = subreddit.posts;
-        // }.bind(this));
+        this.author = '';
+        dataService.getPost(this.subreddit, this.post_id).subscribe(function (post) {
+            this.post = post;
+            this.title = post.title;
+            this.content = post.content;
+            this.author = post.posted_by;
+            this.date = post.when_created;
+            this.upvotes = post.numUpvotes;
+            this.downvotes = post.numDownvotes;
+            this.comments = post.comments;
+        }.bind(this));
     }
 }

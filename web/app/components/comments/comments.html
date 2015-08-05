@@ -1,8 +1,15 @@
 <div class="post_comments">
-    <header class="post">
-        <h1> Post goes here </h1>
-    </header>
+    <h1 class="title" href="#" [router-link]="['/subreddit', {name: subreddit}]">{{ subreddit }}</h1>
+    <section class="post">
+        <header class="post_header">
+            <div><h1> {{ title }} </h1></div>
+            <div class="small">by <a href="#" [router-link]="['/user', {name: author}]">{{ author }}</a></div>
+        </header>
+        <section class="post_content">
+            <p> {{ content }} </p>
+        </section>
+    </section>
     <section class="comments">
-        Comments go here
+        <comment-list [comments]="comments"></comment-list>
     </section>
 </div>

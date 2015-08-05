@@ -19,6 +19,8 @@ import { DataService } from 'app/services/dataService';
 export class User {
     constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
         this.user = routeParams.params.name;
-        dataService.getUser(this.user).subscribe(user => this.output = JSON.stringify(user));
+        dataService.getUser(this.user).subscribe(function (user) {
+            this.posts = user.posts;
+        });
     }
 }

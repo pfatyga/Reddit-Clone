@@ -1,11 +1,8 @@
-.post {
+
+.comment-item {
     background: white;
     padding: 8px;
     margin: 8px;
     box-shadow: rgba(0, 0, 0, 0.156863) 0px 1px 5px;
     border-radius: 2px;
-}
-
-.post_header {
-    margin-bottom: 8px;
 }

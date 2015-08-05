@@ -35,6 +35,10 @@ h5 {
     font-size: 14px;
 }
 
+small {
+    font-size: 10px;
+}
+
 .content {
     width: 100%;
     padding: 8px;

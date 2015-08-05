@@ -25,4 +25,10 @@ export class DataService {
             .toRx()
             .map(res => res.json());
     }
+
+    getPost(subreddit, post_id) {
+        return this.http.get(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id)
+            .toRx()
+            .map(res => res.json());
+    }
 }
