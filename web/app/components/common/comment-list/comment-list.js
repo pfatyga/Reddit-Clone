@@ -14,7 +14,7 @@ import { CommentItem } from './comment-item';
 @View({
     templateUrl: 'app/components/common/comment-list/comment-list.html',
     styleUrls: ['app/components/common/comment-list/comment-list.css'],
-    directives: [CommentItem, NgFor, RouterLink]
+    directives: [CommentList, CommentItem, NgFor, RouterLink]
 })
 export class CommentList {
     constructor() {
