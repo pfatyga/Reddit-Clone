@@ -1,12 +1,15 @@
 <div class="post-item">
     <span class="votes">
-        <div><i class="fa fa-caret-up"></i></div>
+        <div class="upvote"><i (click)="voteUp()" class="fa fa-caret-up"></i></div>
         <div>{{ post.numUpvotes - post.numDownvotes }}</div>
-        <div><i class="fa fa-caret-down"></i></div>
+        <div class="downvote"><i (click)="voteDown()" class="fa fa-caret-down"></i></div>
     </span>
-    <span class="info">
+    <span class="image">
+        <img height="100%" src="http://memecrunch.com/image/532fcbe01605fb35f80000e3.jpg" />
+    </span>
+    <span class="info" href="#" [router-link]="['/comments', {subreddit: post.subreddit, post_id: post.post_id}]">
         <div class="top">
-            <h3 class="title" href="#" [router-link]="['/subreddit', {name: post.subreddit}]">{{ post.title }}</h3>
+            <h3 class="title">{{ post.title }}</h3>
         </div>
         <div class="bottom">
             <section class="right">Posted by

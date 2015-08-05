@@ -22,7 +22,9 @@ export class Comments {
     constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
         this.subreddit = routeParams.params.subreddit;
         this.post_id = routeParams.params.post_id;
-        this.author = '';
+        this.author = 'author';
+        this.title = 'Title';
+        this.content = 'Content';
         dataService.getPost(this.subreddit, this.post_id).subscribe(function (post) {
             this.post = post;
             this.title = post.title;

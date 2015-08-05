@@ -17,6 +17,15 @@ import { RouteParams, RouterLink } from 'angular2/router';
     directives: [NgFor, RouterLink]
 })
 export class PostItem {
+
     constructor() {
+    }
+
+    voteUp() {
+        this.post.numUpvotes++;
+    }
+
+    voteDown() {
+        this.post.numDownvotes++;
     }
 }
