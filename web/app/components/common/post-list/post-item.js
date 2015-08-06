@@ -1,8 +1,7 @@
 import {
     ComponentAnnotation as Component,
     ViewAnnotation as View,
-    Inject,
-    NgFor
+    Inject
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
 
@@ -14,7 +13,7 @@ import { RouteParams, RouterLink } from 'angular2/router';
 @View({
     templateUrl: 'app/components/common/post-list/post-item.html',
     styleUrls: ['app/components/common/post-list/post-item.css'],
-    directives: [NgFor, RouterLink]
+    directives: [RouterLink]
 })
 export class PostItem {
 

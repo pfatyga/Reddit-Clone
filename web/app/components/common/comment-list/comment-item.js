@@ -1,7 +1,6 @@
 import {
     ComponentAnnotation as Component,
-    ViewAnnotation as View,
-    NgFor
+    ViewAnnotation as View
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
 
@@ -12,7 +11,7 @@ import { RouteParams, RouterLink } from 'angular2/router';
 @View({
     templateUrl: 'app/components/common/comment-list/comment-item.html',
     styleUrls: ['app/components/common/comment-list/comment-item.css'],
-    directives: [NgFor, RouterLink]
+    directives: [RouterLink]
 })
 export class CommentItem {
     constructor() {

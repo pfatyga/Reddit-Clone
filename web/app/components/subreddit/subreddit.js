@@ -1,8 +1,7 @@
 import {
     ComponentAnnotation as Component,
     ViewAnnotation as View,
-    Inject,
-    NgFor
+    Inject
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
 import { DataService } from 'app/services/dataService';
@@ -17,7 +16,7 @@ import { PostList } from 'app/components/common/post-list/post-list';
 @View({
     templateUrl: 'app/components/subreddit/subreddit.html',
     styleUrls: ['app/components/subreddit/subreddit.css'],
-    directives: [PostList, NgFor, RouterLink]
+    directives: [PostList, RouterLink]
 })
 export class Subreddit {
     constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
