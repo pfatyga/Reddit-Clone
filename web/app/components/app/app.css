@@ -4,7 +4,7 @@
 
 .wrapper {
     position: relative;
-    width: 80%;
+    width: 100%;
     height: calc(100% - 40px);
     /*margin: 0 auto -80px;*/
 }
@@ -13,7 +13,11 @@
     padding: 8px;
     min-height: 40px;
     background: #4f8ef7;
-    color: #fff
+    color: #fff;
+}
+
+.app-header a {
+    color: #fff;
 }
 
 main {
@@ -26,25 +30,4 @@ main {
     margin: 0 auto;
     padding: 8px;
     text-align: center;
-}
-
-.sidebar {
-    position: relative;
-    float: right;
-    width: 20%;
-    height: calc(100% - 40px);
-    padding: 8px;
-}
-
-.card {
-    padding: 8px;
-    height: 100%;
-    border-radius: 2px;
-    background: #fff;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
-}
-
-.card > ol {
-    list-style-type: decimal;
-    list-style-position: inside;
 }

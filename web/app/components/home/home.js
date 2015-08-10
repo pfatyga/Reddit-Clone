@@ -6,6 +6,7 @@ import { RouterLink } from 'angular2/router';
 import { DataService } from 'app/services/dataService';
 
 import { PostList } from 'app/components/common/post-list/post-list';
+import { Sidebar } from 'app/components/common/sidebar/sidebar';
 
 // Home component
 @Component({
@@ -15,7 +16,7 @@ import { PostList } from 'app/components/common/post-list/post-list';
 @View({
     templateUrl: 'app/components/home/home.html',
     styleUrls: ['app/components/home/home.css'],
-    directives: [PostList, RouterLink]
+    directives: [PostList, Sidebar, RouterLink]
 })
 export class Home {
     constructor(dataService: DataService) {

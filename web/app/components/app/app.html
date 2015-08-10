@@ -1,16 +1,7 @@
 <div class="app">
     <header class="app-header">
-        <span href="#" [router-link]="['/home']" class="title">Reddit Clone</span>
+        <a href="#" [router-link]="['/home']" class="title">Reddit Clone</a>
     </header>
-    <aside class="sidebar">
-        <div class="card">
-            <h3>Rules:</h3>
-            <ol>
-                <li>Don't post CP pls.</li>
-                <li>There are no rules go back to leddit</li>
-            </ol>
-        </div>
-    </aside>
     <div class="wrapper">
         <main>
             <router-outlet></router-outlet>

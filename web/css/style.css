@@ -39,13 +39,30 @@ small {
     font-size: 10px;
 }
 
-.content {
-    width: 100%;
-    padding: 8px;
-}
-
 .content, .sidebar {
     display: inline-block;
     vertical-align: top;
     box-sizing: border-box;
+    padding: 8px;
+}
+
+.content {
+    width: 80%;
+}
+
+.sidebar {
+    width: 20%;
+}
+
+.card {
+    padding: 8px;
+    height: 100%;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.16);
+}
+
+.card > ol {
+    list-style-type: decimal;
+    list-style-position: inside;
 }

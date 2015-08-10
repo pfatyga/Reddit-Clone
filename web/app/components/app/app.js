@@ -38,5 +38,6 @@ export class App {
     constructor(router:Router, location:Location) {
         this.router = router;
         this.location = location;
+        this.user = null;
     }
 }
