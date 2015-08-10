@@ -11,7 +11,7 @@
 
 Run using PHP's built-in web server.
 
-    ./scripts/serve.sh
+    ./scripts/ss.sh
 
 ## Directory Layout
 
