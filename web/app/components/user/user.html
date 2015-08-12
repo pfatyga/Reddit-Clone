@@ -2,9 +2,13 @@
     <header class="user-header">
         <h1> {{ name }}'s Posts</h1>
     </header>
-    <post-list [posts]="posts"></post-list>
+    <section class="posts">
+        <post-list [posts]="posts"></post-list>
+    </section>
     <header class="user-header">
         <h1> {{ name }}'s Comments</h1>
     </header>
-    <comment-list class="root-comments" [comments]="comments"></comment-list>
+    <section class="comments">
+        <comment-list class="root-comments" [comments]="comments"></comment-list>
+    </section>
 </div>

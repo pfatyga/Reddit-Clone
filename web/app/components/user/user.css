@@ -1,3 +1,7 @@
-.user-header {
-    padding: 8px 8px 0 8px;
+header {
+    margin: 10px;
+}
+
+.comments {
+    margin-left: -25px;
 }
