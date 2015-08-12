@@ -37,3 +37,7 @@
     height: 100%;
     margin-right: 10px;
 }
+
+.title > a {
+    color: initial;
+}
