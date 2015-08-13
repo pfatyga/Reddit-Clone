@@ -1,7 +1,13 @@
 <div class="app">
+    <login [class]="{hide: !showLogin}"></login>
     <div class="wrapper">
         <header class="app-header">
-            <a href="#" [router-link]="['/home']" class="title">Reddit Clone</a>
+            <span class="auth">
+                <a href="#" class="login" (click)="toggleLogin()">Sign Up</a>
+                |
+                <a href="#" class="login" (click)="toggleLogin()">Login</a>
+            </span>
+            <a href="#" [router-link]="['/home']" class="title">Leddit</a>
         </header>
         <main>
             <router-outlet></router-outlet>

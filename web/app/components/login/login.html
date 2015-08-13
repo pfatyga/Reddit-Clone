@@ -1,2 +1,11 @@
-<form [control-group]="loginForm">
+<form class="floatingElement" [ng-form-model]="loginForm">
+    <h1>Login</h1>
+    <p>
+        <label for="username">Username</label>
+        <input type="text" id="username" ng-control="username">
+    </p>
+    <p>
+        <label for="password">Password</label>
+        <input type="text" id="password" ng-control="password">
+    </p>
 </form>

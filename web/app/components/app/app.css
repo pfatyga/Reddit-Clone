@@ -32,3 +32,7 @@ main {
     padding: 8px;
     text-align: center;
 }
+
+.auth {
+    float: right;
+}
