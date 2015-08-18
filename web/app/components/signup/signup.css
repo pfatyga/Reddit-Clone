@@ -1,9 +1,9 @@
 form {
     position: absolute;
     width: 400px;
-    height: 400px;
+    height: 320px;
     left: calc(50% - 200px);
-    top: calc(50% - 200px);
+    top: calc(50% - 160px);
     z-index: 9999;
     padding: 15px;
 }
