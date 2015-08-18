@@ -17,7 +17,9 @@ import {
 // Components
 import { Home } from 'app/components/home/home';
 import { Login } from 'app/components/login/login';
+import { Signup } from 'app/components/signup/signup';
 import { Subreddit } from 'app/components/subreddit/subreddit';
+import { Post } from 'app/components/post/post';
 import { User } from 'app/components/user/user';
 import { Comments } from 'app/components/comments/comments';
 
@@ -33,19 +35,16 @@ import { Comments } from 'app/components/comments/comments';
 @RouteConfig([
     { path: '/',                        as: 'home',         component: Home },
     { path: '/r/:name',                 as: 'subreddit',    component: Subreddit },
+    { path: '/r/:subreddit/newPost',    as: 'post',         component: Post },
     { path: '/r/:subreddit/:post_id',   as: 'comments',     component: Comments },
-    { path: '/u/:name',                 as: 'user',         component: User }
+    { path: '/u/:name',                 as: 'user',         component: User },
+    { path: '/login',                   as: 'login',        component: Login },
+    { path: '/signup',                  as: 'signup',       component: Signup }
 ])
 export class App {
-    showLogin;
-    constructor(router:Router, location:Location) {
+    constructor(router: Router, location: Location) {
         this.router = router;
         this.location = location;
-        this.user = null;
-        this.showLogin = false;
     }
 
-    toggleLogin() {
-        this.showLogin = !this.showLogin;
-    }
 }

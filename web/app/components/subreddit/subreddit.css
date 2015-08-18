@@ -1,3 +1,9 @@
 .subreddit-header {
     padding: 8px 8px 0 8px;
 }
+
+.post {
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 8px;
+}

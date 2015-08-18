@@ -1,5 +1,9 @@
-<form class="floatingElement" [ng-form-model]="loginForm">
-    <h1>Login</h1>
+<form class="floatingElement" [ng-form-model]="signupForm">
+    <h1>Signup</h1>
+    <p>
+        <label for="email">Email:</label>
+        <input type="text" id="email" ng-control="email">
+    </p>
     <p>
         <label for="username">Username:</label>
         <input type="text" id="username" ng-control="username">
@@ -9,6 +13,6 @@
         <input type="text" id="password" ng-control="password">
     </p>
     <p>
-        <input type="submit" value="Login">
+        <input type="submit" value="Signup">
     </p>
 </form>

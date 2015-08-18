@@ -11,24 +11,25 @@ import {
 } from 'angular2/forms';
 import { DataService } from 'app/services/dataService';
 
-// Login component
+// Signup component
 @Component({
-    selector: 'login',
+    selector: 'signup',
     hostInjector: [FormBuilder, DataService],
     viewBindings: [
         FormBuilder
     ]
 })
 @View({
-    templateUrl: 'app/components/login/login.html',
-    styleUrls: ['app/components/login/login.css'],
+    templateUrl: 'app/components/signup/signup.html',
+    styleUrls: ['app/components/signup/signup.css'],
     directives: [formDirectives]
 })
 
-export class Login {
-    loginForm;
+export class Signup {
+    signupForm;
     constructor(builder: FormBuilder, dataService: DataService) {
-        this.loginForm = builder.group({
+        this.signupForm = builder.group({
+            'email':    ['', Validators.required],
             'username': ['', Validators.required],
             'password': ['', Validators.required]
         });

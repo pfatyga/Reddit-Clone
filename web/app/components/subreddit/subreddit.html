@@ -3,6 +3,7 @@
         <h1> {{ name }} </h1>
     </header>
     <section class="content">
+        <div class="post floatingElement"><a href="#" [router-link]="['/post', {subreddit: subreddit}]">New Post</a></div>
         <post-list [posts]="posts"></post-list>
     </section><sidebar></sidebar>
 </div>

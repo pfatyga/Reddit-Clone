@@ -1,0 +1,18 @@
+<form class="floatingElement" [ng-form-model]="postForm">
+    <h1>Post to /r/{{subreddit}}</h1>
+    <p>
+        <label for="title">Title:</label>
+        <input type="text" id="title" ng-control="title">
+    </p>
+    <p>
+        <label for="link">Link:</label>
+        <input type="text" id="link" ng-control="link">
+    </p>
+    <p>
+        <label for="content">Content:</label>
+        <textarea rows="15" cols="50" id="content" ng-control="content"></textarea>
+    </p>
+    <p>
+        <input type="submit" value="Post">
+    </p>
+</form>

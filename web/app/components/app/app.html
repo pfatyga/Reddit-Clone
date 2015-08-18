@@ -3,9 +3,9 @@
     <div class="wrapper">
         <header class="app-header">
             <span class="auth">
-                <a href="#" class="login" (click)="toggleLogin()">Sign Up</a>
+                <a href="#" class="login" [router-link]="['/signup']">Sign Up</a>
                 |
-                <a href="#" class="login" (click)="toggleLogin()">Login</a>
+                <a href="#" class="login" [router-link]="['/login']">Login</a>
             </span>
             <a href="#" [router-link]="['/home']" class="title">Leddit</a>
         </header>
