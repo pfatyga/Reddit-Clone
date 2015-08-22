@@ -1,7 +1,7 @@
 // Angular
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View,
+    ComponentMetadata as Component,
+    ViewMetadata as View,
     bootstrap,
     bind,
     BrowserLocation
@@ -20,13 +20,13 @@ import {
 } from 'angular2/router';
 
 // http
-import { httpInjectables } from 'angular2/http';
+import { HTTP_BINDINGS } from 'http/http';
 
 // Components
 import { App } from 'app/components/app/app';
 
 bootstrap(App, [
-    httpInjectables,
+    HTTP_BINDINGS,
     routerInjectables,
     bind(LocationStrategy).toClass(HTML5LocationStrategy)
 ]);

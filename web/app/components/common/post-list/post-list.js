@@ -1,6 +1,6 @@
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View,
+    ComponentMetadata as Component,
+    ViewMetadata as View,
     Inject,
     NgFor
 } from 'angular2/angular2';

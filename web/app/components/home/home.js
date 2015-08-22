@@ -1,6 +1,6 @@
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View
+    ComponentMetadata as Component,
+    ViewMetadata as View
 } from 'angular2/angular2';
 import { RouterLink } from 'angular2/router';
 import { DataService } from 'app/services/dataService';

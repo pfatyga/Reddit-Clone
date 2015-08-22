@@ -1,5 +1,5 @@
-import { ComponentAnnotation as Component } from 'angular2/angular2';
-import { Http } from 'angular2/http';
+import { ComponentMetadata as Component } from 'angular2/angular2';
+import { Http } from 'http/http';
 import { Observable } from 'rx';
 
 export class DataService {

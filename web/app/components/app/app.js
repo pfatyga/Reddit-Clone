@@ -1,8 +1,7 @@
 // Angular
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View,
-    CSSClass
+    ComponentMetadata as Component,
+    ViewMetadata as View
 } from 'angular2/angular2';
 
 // Router
@@ -30,7 +29,7 @@ import { Comments } from 'app/components/comments/comments';
 @View({
     templateUrl: 'app/components/app/app.html',
     styleUrls: ['app/components/app/app.css'],
-    directives: [CSSClass, RouterOutlet, RouterLink, Login]
+    directives: [RouterOutlet, RouterLink, Login]
 })
 @RouteConfig([
     { path: '/',                        as: 'home',         component: Home },

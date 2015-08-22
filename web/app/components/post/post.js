@@ -1,12 +1,12 @@
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View,
+    ComponentMetadata as Component,
+    ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
 import {
     FormBuilder,
     Validators,
-    formDirectives,
+    FORM_DIRECTIVES,
     ControlGroup,
     forms
 } from 'angular2/forms';
@@ -24,7 +24,7 @@ import { DataService } from 'app/services/dataService';
 @View({
     templateUrl: 'app/components/post/post.html',
     styleUrls: ['app/components/post/post.css'],
-    directives: [formDirectives, RouterLink]
+    directives: [FORM_DIRECTIVES, RouterLink]
 })
 
 export class Post {

@@ -1,11 +1,11 @@
 import {
-    ComponentAnnotation as Component,
-    ViewAnnotation as View
+    ComponentMetadata as Component,
+    ViewMetadata as View
 } from 'angular2/angular2';
 import {
     FormBuilder,
     Validators,
-    formDirectives,
+    FORM_DIRECTIVES,
     ControlGroup,
     forms
 } from 'angular2/forms';
@@ -22,7 +22,7 @@ import { DataService } from 'app/services/dataService';
 @View({
     templateUrl: 'app/components/signup/signup.html',
     styleUrls: ['app/components/signup/signup.css'],
-    directives: [formDirectives]
+    directives: [FORM_DIRECTIVES]
 })
 
 export class Signup {
