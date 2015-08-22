@@ -9,12 +9,13 @@ import {
     ControlGroup,
     forms
 } from 'angular2/forms';
-import { DataService } from 'app/services/dataService';
+
+import { host } from 'app/services/dataService';
 
 // Login component
 @Component({
     selector: 'login',
-    hostInjector: [FormBuilder, DataService],
+    hostInjector: [FormBuilder],
     viewBindings: [
         FormBuilder
     ]
@@ -27,7 +28,7 @@ import { DataService } from 'app/services/dataService';
 
 export class Login {
     loginForm;
-    constructor(builder: FormBuilder, dataService: DataService) {
+    constructor(builder: FormBuilder) {
         this.loginForm = builder.group({
             'username': ['', Validators.required],
             'password': ['', Validators.required]

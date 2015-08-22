@@ -9,12 +9,12 @@ import {
     ControlGroup,
     forms
 } from 'angular2/forms';
-import { DataService } from 'app/services/dataService';
+import { host } from 'app/services/dataService';
 
 // Signup component
 @Component({
     selector: 'signup',
-    hostInjector: [FormBuilder, DataService],
+    hostInjector: [FormBuilder],//, DataService],
     viewBindings: [
         FormBuilder
     ]
@@ -27,7 +27,7 @@ import { DataService } from 'app/services/dataService';
 
 export class Signup {
     signupForm;
-    constructor(builder: FormBuilder, dataService: DataService) {
+    constructor(builder: FormBuilder) {
         this.signupForm = builder.group({
             'email':    ['', Validators.required],
             'username': ['', Validators.required],

@@ -11,12 +11,12 @@ import {
     forms
 } from 'angular2/forms';
 import { RouteParams, RouterLink } from 'angular2/router';
-import { DataService } from 'app/services/dataService';
+import { host } from 'app/services/dataService';
 
 // Post component
 @Component({
     selector: 'post',
-    hostInjector: [FormBuilder, DataService],
+    hostInjector: [FormBuilder],//, DataService],
     viewBindings: [
         FormBuilder
     ]
@@ -29,7 +29,7 @@ import { DataService } from 'app/services/dataService';
 
 export class Post {
     postForm;
-    constructor(@Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, dataService: DataService) {
+    constructor(@Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder) {
         this.subreddit = routeParams.params.subreddit;
         this.postForm = builder.group({
             'title':    ['', Validators.required],

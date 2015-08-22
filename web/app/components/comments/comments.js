@@ -3,15 +3,15 @@ import {
     ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
+import { Http } from 'http/http';
 import { RouteParams, RouterLink } from 'angular2/router';
-import { DataService } from 'app/services/dataService';
+import { host } from 'app/services/dataService';
 
 import { CommentList } from 'app/components/common/comment-list/comment-list';
 
 // Comments component
 @Component({
-    selector: 'comments',
-    hostInjector: [DataService]
+    selector: 'comments'
 })
 @View({
     templateUrl: 'app/components/comments/comments.html',
@@ -19,13 +19,14 @@ import { CommentList } from 'app/components/common/comment-list/comment-list';
     directives: [CommentList, RouterLink]
 })
 export class Comments {
-    constructor(@Inject(RouteParams) routeParams: RouteParams, dataService: DataService) {
+    constructor(@Inject(RouteParams) routeParams: RouteParams, http: Http) {
+        this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.post_id = routeParams.params.post_id;
         this.author = 'author';
         this.title = 'Title';
         this.content = 'Content';
-        dataService.getPost(this.subreddit, this.post_id).subscribe(function (post) {
+        this.getPost(this.subreddit, this.post_id).subscribe(function (post) {
             this.post = post;
             this.title = post.title;
             this.content = post.content;
@@ -36,4 +37,11 @@ export class Comments {
             this.comments = post.comments;
         }.bind(this));
     }
+
+    getPost(subreddit, post_id) {
+        return this.http.get(host + '/api/subreddits/' + subreddit + '/posts/' + post_id)
+            .toRx()
+            .map(res => res.json());
+    }
+
 }
