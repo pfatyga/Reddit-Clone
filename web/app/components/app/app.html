@@ -1,10 +1,13 @@
 <div class="app">
     <div class="wrapper">
         <header class="app-header">
-            <span class="auth">
+            <span class="auth" *ng-if="!user">
                 <a href="#" class="login" [router-link]="['/signup']">Sign Up</a>
                 |
                 <a href="#" class="login" [router-link]="['/login']">Login</a>
+            </span>
+            <span class="auth" *ng-if="!!user">
+                Welcome <a href="#" class="user" [router-link]="['/user', {name: user.username}]">{{ user.username }}</a>
             </span>
             <a href="#" [router-link]="['/home']" class="title">Leddit</a>
         </header>

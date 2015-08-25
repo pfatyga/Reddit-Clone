@@ -2,6 +2,7 @@ import {
     ComponentMetadata as Component,
     ViewMetadata as View
 } from 'angular2/angular2';
+import { Location } from 'angular2/router';
 import {
     FormBuilder,
     Validators,
@@ -27,11 +28,16 @@ import { host } from 'app/services/dataService';
 
 export class Signup {
     signupForm;
-    constructor(builder: FormBuilder) {
+    constructor(location: Location, builder: FormBuilder) {
+        this.location = location;
         this.signupForm = builder.group({
             'email':    ['', Validators.required],
             'username': ['', Validators.required],
             'password': ['', Validators.required]
         });
+    }
+
+    submit() {
+        this.location.back();
     }
 }

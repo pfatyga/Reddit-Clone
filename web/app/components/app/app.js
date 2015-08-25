@@ -1,7 +1,8 @@
 // Angular
 import {
     ComponentMetadata as Component,
-    ViewMetadata as View
+    ViewMetadata as View,
+    NgIf
 } from 'angular2/angular2';
 
 // Router
@@ -12,6 +13,9 @@ import {
     RouterLink,
     Location
 } from 'angular2/router';
+
+import { Http } from 'http/http';
+import { host } from 'app/services/dataService';
 
 // Components
 import { Home } from 'app/components/home/home';
@@ -29,7 +33,7 @@ import { Comments } from 'app/components/comments/comments';
 @View({
     templateUrl: 'app/components/app/app.html',
     styleUrls: ['app/components/app/app.css'],
-    directives: [RouterOutlet, RouterLink, Login]
+    directives: [NgIf, RouterOutlet, RouterLink, Login]
 })
 @RouteConfig([
     { path: '/',                        as: 'home',         component: Home },
@@ -41,9 +45,29 @@ import { Comments } from 'app/components/comments/comments';
     { path: '/signup',                  as: 'signup',       component: Signup }
 ])
 export class App {
-    constructor(router: Router, location: Location) {
+    user;
+    constructor(router: Router, location: Location, http: Http) {
         this.router = router;
         this.location = location;
+        this.http = http;
+        this.getUser();
+    }
+
+    login(userInfo) {
+        this.user = userInfo;
+    }
+
+    getUser() {
+        // call /api/getUser and set this.user to result
+        this.http.get(host + '/api/authenticateSession')
+            .toRx()
+            .toPromise()
+            .then(function (ret) {
+                if(ret.status == 200) {
+                    var user = ret.json();
+                    this.user = user;
+                }
+            }.bind(this));
     }
 
 }

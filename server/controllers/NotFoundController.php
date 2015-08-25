@@ -13,6 +13,5 @@ class NotFoundController
     {
         http_response_code(404);
         // @todo make 404 page
-        return null;
     }
 }

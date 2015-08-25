@@ -3,6 +3,7 @@ import {
     ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
+import { Location } from 'angular2/router';
 import {
     FormBuilder,
     Validators,
@@ -11,6 +12,8 @@ import {
     forms
 } from 'angular2/forms';
 import { RouteParams, RouterLink } from 'angular2/router';
+
+import { Http } from 'http/http';
 import { host } from 'app/services/dataService';
 
 // Post component
@@ -29,12 +32,33 @@ import { host } from 'app/services/dataService';
 
 export class Post {
     postForm;
-    constructor(@Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder) {
+    constructor(location: Location, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, http: Http) {
+        this.location = location;
+        this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.postForm = builder.group({
             'title':    ['', Validators.required],
             'link':     ['', Validators.required],
+            'imageLink': [''],
             'content':  ['', Validators.required],
         });
     }
+
+    submitPost(title, content, link) {
+        return this.http.post(host + '/api/subreddits/' + this.subreddit + '/new', 'title=' + title + '&content=' + content + '&link=' + link, {headers: {
+            'Content-type': 'application/x-www-form-urlencoded'
+        }})
+            .toRx()
+            .toPromise();
+    }
+
+    submit() {
+        this.submitPost('blah', 'blah', 'blah').then(function (test) {
+            debugger;
+        }, function (test) {
+            debugger;
+        });
+        this.location.back();
+    }
+
 }

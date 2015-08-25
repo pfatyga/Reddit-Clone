@@ -8,7 +8,14 @@ form {
     padding: 15px;
 }
 
-form > p,
-h1 {
+form > p {
     padding: 15px;
+}
+
+h1 {
+    padding-bottom: 8px;
+}
+
+.message {
+    color: red;
 }

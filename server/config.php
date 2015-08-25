@@ -19,6 +19,21 @@ $config = array(
             'controller' => '\reddit_clone\controllers\SubredditController::GetFrontPage'
         ),
         array(
+            'path' => '/api/login',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\AuthenticationController::login'
+        ),
+        array(
+            'path' => '/api/logout',
+            'method' => 'GET',
+            'controller' => '\reddit_clone\controllers\AuthenticationController::logout'
+        ),
+        array(
+            'path' => '/api/authenticateSession',
+            'method' => 'GET',
+            'controller' => '\reddit_clone\controllers\AuthenticationController::authenticate'
+        ),
+        array(
             'path' => '/api/users/:username',
             'method' => 'GET',
             'controller' => '\reddit_clone\controllers\UserController::getUser'
@@ -47,6 +62,11 @@ $config = array(
             'path' => '/api/subreddits/:name',
             'method' => 'GET',
             'controller' => '\reddit_clone\controllers\SubredditController::getSubredditPosts'
+        ),
+        array(
+            'path' => '/api/subreddits/:name/new',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\SubredditController::newPost'
         ),
         array(
             'path' => '/api/subreddits/:name/posts/:id',

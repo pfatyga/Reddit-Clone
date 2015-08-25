@@ -1,5 +1,6 @@
 <form class="floatingElement" [ng-form-model]="loginForm">
     <h1>Login</h1>
+    <p class="message">{{ message }}</p>
     <p>
         <label for="username">Username:</label>
         <input type="text" id="username" ng-control="username">
@@ -9,6 +10,6 @@
         <input type="password" id="password" ng-control="password">
     </p>
     <p>
-        <input type="submit" value="Login">
+        <input type="submit" value="Login" (click)="submit()">
     </p>
 </form>

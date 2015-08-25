@@ -30,6 +30,14 @@ class SubredditController
 
     }
 
+    public function newPost(array $parameters) {
+        $subreddit = $parameters['name'];
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        $link = $_POST['link'];
+        $imageLink = $_POST['imageLink'];
+    }
+
     /**
      * @return string
      */
@@ -60,7 +68,6 @@ class SubredditController
     public function getSubredditPosts(array $parameters)
     {
         $subreddit_name = $parameters['name'];
-        $post_id = $parameters['id'];
 
         $posts = "[
           {
