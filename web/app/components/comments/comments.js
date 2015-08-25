@@ -30,10 +30,10 @@ export class Comments {
             this.post = post;
             this.title = post.title;
             this.content = post.content;
-            this.author = post.posted_by;
+            this.author = post.author;
             this.date = post.when_created;
-            this.upvotes = post.numUpvotes;
-            this.downvotes = post.numDownvotes;
+            this.upVotes = post.upVotes;
+            this.downVotes = post.downVotes;
             this.comments = post.comments;
         }.bind(this));
     }

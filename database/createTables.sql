@@ -17,22 +17,22 @@ CREATE TABLE post(
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     when_created DATE NOT NULL,
-    username VARCHAR(255) NOT NULL,
-    subreddit_name VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    subreddit VARCHAR(255) NOT NULL,
     PRIMARY KEY (post_id),
-    FOREIGN KEY (username) REFERENCES user(username),
-    FOREIGN KEY (subreddit_name) REFERENCES subreddit(name)
+    FOREIGN KEY (author) REFERENCES user(username),
+    FOREIGN KEY (subreddit) REFERENCES subreddit(name)
 );
 
 CREATE TABLE comment(
     comment_id INT NOT NULL AUTO_INCREMENT,
     content TEXT NOT NULL,
     when_created DATE NOT NULL,
-    username VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
     post_id INT NOT NULL,
     parent_comment_id INT,
     PRIMARY KEY (comment_id),
-    FOREIGN KEY (username) REFERENCES user(username),
+    FOREIGN KEY (author) REFERENCES user(username),
     FOREIGN KEY (post_id) REFERENCES post(post_id),
     FOREIGN KEY (parent_comment_id) REFERENCES comment(comment_id)
 );

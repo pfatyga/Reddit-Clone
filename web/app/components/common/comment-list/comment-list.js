@@ -5,7 +5,7 @@ import {
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
 
-import { CommentItem } from './comment-item';
+import { CommentItem } from 'app/components/common/comment-list/comment-item';
 
 @Component({
     selector: 'comment-list',

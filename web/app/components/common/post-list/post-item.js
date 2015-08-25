@@ -21,10 +21,10 @@ export class PostItem {
     }
 
     voteUp() {
-        this.post.numUpvotes++;
+        this.post.upVotes++;
     }
 
     voteDown() {
-        this.post.numDownvotes++;
+        this.post.downVotes++;
     }
 }

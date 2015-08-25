@@ -6,8 +6,7 @@
             <div class="downvote"><i class="fa fa-caret-down"></i></div>
         </span>
         <section>
-            <a href="#" [router-link]="['/user', {name: comment.posted_by}]">{{ comment.posted_by }}</a>
-            {{ comment.numUpvotes - comment.numDownvotes }} points
+            <a href="#" [router-link]="['/user', {name: comment.author}]">{{ comment.author }}</a>
             {{ comment.when_created }}
         </section>
         <section>

@@ -1,7 +1,7 @@
 <div class="post-item">
     <span class="votes">
         <div class="upvote"><i (click)="voteUp()" class="fa fa-caret-up"></i></div>
-        <div>{{ post.numUpvotes - post.numDownvotes }}</div>
+        <div>{{ post.upVotes - post.downVotes }}</div>
         <div class="downvote"><i (click)="voteDown()" class="fa fa-caret-down"></i></div>
     </span>
     <img class="image" height="100%" src="http://memecrunch.com/image/532fcbe01605fb35f80000e3.jpg" />
@@ -11,7 +11,7 @@
         </div>
         <div class="bottom">
             <section class="right">Posted by
-                <a href="#" [router-link]="['/user', {name: post.posted_by}]">/u/{{ post.posted_by }}</a>
+                <a href="#" [router-link]="['/user', {name: post.author}]">/u/{{ post.author }}</a>
                 to <a href="#" [router-link]="['/subreddit', {name: post.subreddit}]">/r/{{ post.subreddit }}</a>
             </section>
             <section>

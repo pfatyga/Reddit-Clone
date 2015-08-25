@@ -6,6 +6,7 @@ include $_SERVER['DOCUMENT_ROOT'] . '/../server/Router.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/models/IdTrait.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/models/User.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/services/UserService.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/../server/services/SubredditService.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/controllers/ApiController.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/controllers/SubredditController.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/../server/controllers/UserController.php';

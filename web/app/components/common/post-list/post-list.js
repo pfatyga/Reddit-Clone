@@ -6,7 +6,7 @@ import {
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
 
-import { PostItem } from './post-item';
+import { PostItem } from 'app/components/common/post-list/post-item';
 
 // PostList component
 @Component({

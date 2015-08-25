@@ -2,16 +2,21 @@
 
 $config = array(
     'db' => array(
-        'name' => 'reddit_clone',
+        'name' => 'leddit',
         'host' => '127.0.0.1',
-        'username' => 'user',
-        'password' => 'pass'
+        'username' => 'leddit',
+        'password' => 'temp1234'
     ),
     'routes' => array(
         array(
             'path' => '/api',
             'method' => 'GET',
             'controller' => '\reddit_clone\controllers\ApiController::getApi'
+        ),
+        array(
+            'path' => '/api/posts',
+            'method' => 'GET',
+            'controller' => '\reddit_clone\controllers\SubredditController::GetFrontPage'
         ),
         array(
             'path' => '/api/users/:username',
@@ -41,7 +46,12 @@ $config = array(
         array(
             'path' => '/api/subreddits/:name',
             'method' => 'GET',
-            'controller' => '\reddit_clone\controllers\SubredditController::getSubreddit'
+            'controller' => '\reddit_clone\controllers\SubredditController::getSubredditPosts'
+        ),
+        array(
+            'path' => '/api/subreddits/:name/posts/:id',
+            'method' => 'GET',
+            'controller' => '\reddit_clone\controllers\SubredditController::getPost'
         )
     )
 );

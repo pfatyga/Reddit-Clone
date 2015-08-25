@@ -106,4 +106,9 @@ class UserController
         header('Content-Type: application/json');
         return '';
     }
+
+    public function getUserPosts(array $parameters) {
+
+    }
+
 }
