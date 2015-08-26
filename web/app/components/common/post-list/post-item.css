@@ -38,6 +38,18 @@
     margin-right: 10px;
 }
 
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .title > a {
-    color: initial;
+    color: initial; //no hyperlink color
+    max-height: 18px;
+}
+
+.upvote,
+.downvote {
+    text-align: center;
 }

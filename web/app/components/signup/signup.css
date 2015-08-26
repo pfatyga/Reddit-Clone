@@ -44,4 +44,5 @@ input {
 
 .message {
     color: red;
+    margin-bottom: 8px;
 }
