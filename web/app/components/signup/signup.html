@@ -1,18 +1,23 @@
-<form class="floatingElement" [ng-form-model]="signupForm">
-    <h1>Signup</h1>
-    <p>
-        <label for="email">Email:</label>
-        <input type="text" id="email" ng-control="email">
-    </p>
-    <p>
-        <label for="username">Username:</label>
-        <input type="text" id="username" ng-control="username">
-    </p>
-    <p>
-        <label for="password">Password:</label>
-        <input type="password" id="password" ng-control="password">
-    </p>
-    <p>
-        <input type="submit" value="Signup" (click)="submit()">
-    </p>
-</form>
+<div class="center">
+    <div class="floatingElement login">
+        <h1>Signup</h1>
+        <hr>
+        <p class="message">{{ message }}</p>
+        <form [ng-form-model]="signupForm">
+            <label for="email">Email:</label>
+            <input type="text" id="email" ng-control="email">
+            <br>
+            <br>
+            <label for="username">Username:</label>
+            <input type="text" id="username" ng-control="username">
+            <br>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" ng-control="password">
+            <br>
+            <br>
+            <input type="submit" value="Signup" (click)="submit()">
+            <br>
+        </form>
+    </div>
+</div>
