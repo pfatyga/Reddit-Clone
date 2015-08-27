@@ -4,10 +4,10 @@
         <div>{{ post.upVotes - post.downVotes }}</div>
         <div class="downvote"><i (click)="voteDown()" class="fa fa-caret-down"></i></div>
     </span>
-    <img class="image" height="100%" src="http://memecrunch.com/image/532fcbe01605fb35f80000e3.jpg" />
-    <span class="info" href="#" [router-link]="['/comments', {subreddit: post.subreddit, post_id: post.post_id}]">
+    <img class="image" height="100%" [src]="post.imageUrl" />
+    <span class="info">
         <div class="top">
-            <h3 class="title"><a href="#" [router-link]="['/comments', {subreddit: post.subreddit, post_id: post.post_id}]">{{ post.title }}</a></h3>
+            <h3 class="title"><a [href]="post.url">{{ post.title }}</a></h3>
         </div>
         <div class="bottom">
             <section class="right">Posted by
