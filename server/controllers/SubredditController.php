@@ -35,6 +35,31 @@ class SubredditController
 
     }
 
+    public function createSubreddit(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $user = $_SESSION['username'];
+
+            if(empty($subreddit)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            if($this->subredditService->createSubreddit($subreddit)) {
+                $this->subredditService->addModerator($subreddit, $user);
+                $this->subredditService->addSubscriber($subreddit, $user);
+                http_response_code(200);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+    }
+
     public function newPost(array $parameters) {
         session_start();
         if(isset($_SESSION['username'])) {
@@ -83,88 +108,36 @@ class SubredditController
      */
     public function getSubreddit(array $parameters)
     {
-        $subreddit = array(
-            'name' => $parameters['name'],
-            'posts' => []
-        );
+        $name = $parameters['name'];
+        if($this->subredditService->subredditExists($name)) {
 
-        header('Content-Type: application/json');
-        return json_encode($subreddit);
-    }
+            $posts = $this->subredditService->getSubredditPosts($name);
+            $moderators = $this->subredditService->getSubredditModerators($name);
+            $numSubscribers = $this->subredditService->getCountSubredditSubscribers($name);
 
-    public function getSubredditPosts(array $parameters)
-    {
-        $subreddit_name = $parameters['name'];
+            $subreddit = array(
+                'name' => $name,
+                'posts' => $posts,
+                'moderators' => $moderators,
+                'numSubscribers' => $numSubscribers
+            );
 
-        $posts = "[
-          {
-            \"post_id\": \"0\",
-            \"title\": \"Check out this meme\",
-            \"subreddit\": \"memes\",
-            \"posted_by\": \"test_user\",
-            \"when_created\": \"2015-07-22T10:00:00+00:00\",
-            \"numComments\": 4,
-            \"numUpvotes\": 1,
-            \"numDownvotes\": 0
-          }
-        ]";
+            header('Content-Type: application/json');
+            return json_encode($subreddit);
+        } else {
+            http_response_code(404);
+            return;
+        }
 
-        header('Content-Type: application/json');
-        return $posts;
     }
 
     public function getPost(array $parameters)
     {
-        $post = "{
-          \"post_id\": 4,
-          \"title\": \"Check out this meme\",
-          \"posted_by\": \"test_user\",
-          \"subreddit\": \"memes\",
-          \"when_created\": \"2015-07-22T10:00:00+00:00\",
-          \"numComments\": 4,
-          \"numUpvotes\": 1,
-          \"numDownvotes\": 0,
-          \"content\": \"This is nice meme. I really really really really like this meme.\",
-          \"comments\": [
-            {
-              \"content\": \"Nice meme\",
-              \"posted_by\": \"test_user\",
-              \"when_created\": \"2015-07-22T10:00:00+00:00\",
-              \"numUpvotes\": 1,
-              \"numDownvotes\": 0,
-              \"children\": [
-                {
-                  \"content\": \"Nice meme2\",
-                  \"posted_by\": \"test_user\",
-                  \"when_created\": \"2015-07-22T10:00:00+00:00\",
-                  \"numUpvotes\": 1,
-                  \"numDownvotes\": 0,
-                  \"children\": [
-                    {
-                      \"content\": \"Nice meme4\",
-                      \"posted_by\": \"test_user\",
-                      \"when_created\": \"2015-07-22T10:00:00+00:00\",
-                      \"numUpvotes\": 1,
-                      \"numDownvotes\": 0,
-                      \"children\": []
-                    }
-                  ]
-                },
-                {
-                  \"content\": \"Nice meme3\",
-                  \"posted_by\": \"test_user\",
-                  \"when_created\": \"2015-07-22T10:00:00+00:00\",
-                  \"numUpvotes\": 1,
-                  \"numDownvotes\": 0,
-                  \"children\": []
-                }
-              ]
-            }
-          ]
-      }";
+        $post_id = $parameters['id'];
+        $post = $this->subredditService->getSubredditPost($post_id);
 
       header('Content-Type: application/json');
-      return $post;
+      return json_encode($post);
 
     }
 

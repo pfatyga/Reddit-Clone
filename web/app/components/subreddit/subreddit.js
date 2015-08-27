@@ -1,9 +1,10 @@
 import {
     ComponentMetadata as Component,
     ViewMetadata as View,
-    Inject
+    Inject,
+    NgIf
 } from 'angular2/angular2';
-import { RouteParams, RouterLink } from 'angular2/router';
+import { Router, RouteParams, RouterLink } from 'angular2/router';
 
 import { Http } from 'http/http';
 import { host } from 'app/services/dataService';
@@ -18,23 +19,54 @@ import { Sidebar } from 'app/components/common/sidebar/sidebar';
 @View({
     templateUrl: 'app/components/subreddit/subreddit.html',
     styleUrls: ['app/components/subreddit/subreddit.css'],
-    directives: [PostList, Sidebar, RouterLink]
+    directives: [NgIf, PostList, Sidebar, RouterLink]
 })
 export class Subreddit {
+    exists;
+    name;
+    posts;
+    moderators;
+    numSubscribers;
 
-    constructor(@Inject(RouteParams) routeParams: RouteParams, http: Http) {
+    constructor(router: Router, @Inject(RouteParams) routeParams: RouteParams, http: Http) {
         this.subreddit = routeParams.params.name;
         this.http = http;
-        this.getSubreddit(this.subreddit).subscribe(function (subreddit) {
-            this.name = subreddit.name;
-            this.posts = subreddit.posts;
+        this.router = router;
+        this.refresh();
+    }
+
+    refresh() {
+        this.getSubreddit(this.subreddit).then(function (result) {
+            if(result.status == 200) {
+                var subreddit = result.json();
+                this.name = subreddit.name;
+                this.posts = subreddit.posts;
+                this.moderators = subreddit.moderators;
+                this.numSubscribers = subreddit.numSubscribers;
+                this.exists = true;
+            } else {
+                this.exists = false;
+            }
+
         }.bind(this));
     }
 
     getSubreddit(name) {
         return this.http.get(host + '/api/subreddits/' + name)
             .toRx()
-            .map(res => res.json());
+            .toPromise();
+    }
+
+    createSubreddit(name) {
+        return this.http.post(host + '/api/subreddits/' + name + '/create')
+            .toRx()
+            .toPromise();
+    }
+
+    click() {
+        this.createSubreddit(this.subreddit).then(function (result) {
+            this.refresh();
+        }.bind(this));
     }
 
 }

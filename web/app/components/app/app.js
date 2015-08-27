@@ -62,9 +62,9 @@ export class App {
         this.http.get(host + '/api/authenticateSession')
             .toRx()
             .toPromise()
-            .then(function (ret) {
-                if(ret.status == 200) {
-                    var user = ret.json();
+            .then(function (result) {
+                if(result.status == 200) {
+                    var user = result.json();
                     this.user = user;
                 }
             }.bind(this));

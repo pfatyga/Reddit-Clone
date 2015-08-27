@@ -52,13 +52,13 @@ export class Signup {
     }
 
     submit() {
-        this.signup(this.signupForm.controls.username.value, this.signupForm.controls.password.value, this.signupForm.controls.email.value).then(function (ret) {
-            if(ret.status == 200) {
-                var user = ret.json();
+        this.signup(this.signupForm.controls.username.value, this.signupForm.controls.password.value, this.signupForm.controls.email.value).then(function (result) {
+            if(result.status == 200) {
+                var user = result.json();
                 this.app.login(user);
                 this.location.back();
             } else {
-                this.message = ret.text();
+                this.message = result.text();
             }
         }.bind(this), function(err) {
             this.message = 'An error occurred: ' + JSON.stringify(err);

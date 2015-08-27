@@ -57,12 +57,12 @@ export class Post {
     }
 
     submit() {
-        this.submitPost(this.postForm.controls.title.value, this.postForm.controls.content.value, this.postForm.controls.url.value, this.postForm.controls.imageUrl.value).then(function (ret) {
-            if(ret.status == 200) {
-                var post_id = parseInt(ret.text());
+        this.submitPost(this.postForm.controls.title.value, this.postForm.controls.content.value, this.postForm.controls.url.value, this.postForm.controls.imageUrl.value).then(function (result) {
+            if(result.status == 200) {
+                var post_id = parseInt(result.text());
                 this.router.parent.navigate('/r/' + this.subreddit + '/' + post_id);
             } else {
-                this.message = ret.text();
+                this.message = result.text();
             }
         }.bind(this), function(err) {
             this.message = 'An error occurred: ' + JSON.stringify(err);

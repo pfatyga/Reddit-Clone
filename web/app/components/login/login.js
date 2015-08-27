@@ -53,13 +53,13 @@ export class Login {
     }
 
     submit() {
-        this.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value).then(function (ret) {
-            if(ret.status == 200) {
-                var user = ret.json();
+        this.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value).then(function (result) {
+            if(result.status == 200) {
+                var user = result.json();
                 this.app.login(user);
                 this.location.back();
             } else {
-                this.message = ret.text();
+                this.message = result.text();
             }
         }.bind(this), function(err) {
             this.message = 'An error occurred: ' + JSON.stringify(err);

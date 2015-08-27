@@ -1,9 +1,21 @@
-<div class="subreddit">
+<div *ng-if="exists" class="subreddit">
     <header class="subreddit-header">
-        <h1> {{ name }} </h1>
+        <h1> /r/{{ subreddit }} </h1>
     </header>
     <section class="content">
         <div class="post floatingElement"><a href="#" [router-link]="['/post', {subreddit: subreddit}]">New Post</a></div>
         <post-list [posts]="posts"></post-list>
-    </section><sidebar></sidebar>
+    </section>
+    <sidebar></sidebar>
+</div>
+
+<div *ng-if="!exists" class="subreddit">
+    <header class="subreddit-header">
+        <h1> /r/{{ subreddit }} </h1>
+    </header>
+    <section class="content">
+        <h2>This subreddit does not exist</h2>
+        <br>
+        <div class="post floatingElement"><a href="#" [router-link]="['/subreddit', {name: subreddit}]" (click)="click()">Create Subreddit</a></div>
+    </section>
 </div>

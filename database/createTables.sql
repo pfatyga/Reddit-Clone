@@ -8,7 +8,7 @@ CREATE TABLE user(
 
 CREATE TABLE subreddit(
     name VARCHAR(255) NOT NULL,
-    when_created DATE,
+    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (name)
 );
 
@@ -18,7 +18,7 @@ CREATE TABLE post(
     content TEXT NOT NULL,
     url VARCHAR(255),
     imageUrl VARCHAR(255),
-    when_created DATE NOT NULL,
+    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     author VARCHAR(255) NOT NULL,
     subreddit VARCHAR(255) NOT NULL,
     PRIMARY KEY (post_id),
@@ -29,7 +29,7 @@ CREATE TABLE post(
 CREATE TABLE comment(
     comment_id INT NOT NULL AUTO_INCREMENT,
     content TEXT NOT NULL,
-    when_created DATE NOT NULL,
+    timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     author VARCHAR(255) NOT NULL,
     post_id INT NOT NULL,
     parent_comment_id INT,
@@ -59,16 +59,16 @@ CREATE TABLE user_comment_vote(
 
 CREATE TABLE user_subreddit_subscription(
     username VARCHAR(255) NOT NULL,
-    subreddit_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (username, subreddit_name),
+    subreddit VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username, subreddit),
     FOREIGN KEY (username) REFERENCES user(username),
-    FOREIGN KEY (subreddit_name) REFERENCES subreddit(name)
+    FOREIGN KEY (subreddit) REFERENCES subreddit(name)
 );
 
 CREATE TABLE user_subreddit_moderator(
     username VARCHAR(255) NOT NULL,
-    subreddit_name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (username, subreddit_name),
+    subreddit VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username, subreddit),
     FOREIGN KEY (username) REFERENCES user(username),
-    FOREIGN KEY (subreddit_name) REFERENCES subreddit(name)
+    FOREIGN KEY (subreddit) REFERENCES subreddit(name)
 );

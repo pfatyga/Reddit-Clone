@@ -64,9 +64,14 @@ $config = array(
             'controller' => '\reddit_clone\controllers\SubredditController::getSubreddits'
         ),
         array(
+            'path' => '/api/subreddits/:name/create',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\SubredditController::createSubreddit'
+        ),
+        array(
             'path' => '/api/subreddits/:name',
             'method' => 'GET',
-            'controller' => '\reddit_clone\controllers\SubredditController::getSubredditPosts'
+            'controller' => '\reddit_clone\controllers\SubredditController::getSubreddit'
         ),
         array(
             'path' => '/api/subreddits/:name/new',
