@@ -29,7 +29,7 @@ class SubredditService
 
     public function getFrontpage()
     {
-        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, when_created, author, subreddit, SUM(UPV.type) AS upVotes, COUNT(UPV.type)-SUM(UPV.type) AS downVotes FROM post P, user_post_vote UPV WHERE P.post_id = UPV.post_id');
+        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, when_created, author, subreddit, SUM(UPV.type) AS upVotes, COUNT(UPV.type)-SUM(UPV.type) AS downVotes FROM post P, user_post_vote UPV WHERE P.post_id = UPV.post_id HAVING P.post_id IS NOT NULL');
         $stmt->execute();
 
         return $stmt->get_result()->fetch_assoc();

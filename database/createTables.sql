@@ -16,6 +16,8 @@ CREATE TABLE post(
     post_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
+    url VARCHAR(255),
+    imageUrl VARCHAR(255),
     when_created DATE NOT NULL,
     author VARCHAR(255) NOT NULL,
     subreddit VARCHAR(255) NOT NULL,

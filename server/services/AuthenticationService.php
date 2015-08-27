@@ -36,4 +36,21 @@ class AuthenticationService
 
     }
 
+    public function signupUser($username, $password, $email) {
+        if($stmt = $this->dbConn->prepare('INSERT INTO user (username, password, email, is_admin) VALUES (?, ?, ?, 0)')) {
+            if(!$stmt->bind_param('sss', $username, $password, $email)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return true;
+        } else {
+            return false;//"Prepare statement failed";
+        }
+
+
+    }
+
 }

@@ -65,6 +65,33 @@ class AuthenticationController
 
     }
 
+    public function signup() {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $email =    $_POST['email'];
+
+        if(empty($username) || empty($password) || empty($email)) {
+            http_response_code(400);
+            return "Bad Request";
+        }
+
+        $success = $this->authenticationService->signupUser($username, $password, $email);
+        if($success) {
+            session_start();
+            $_SESSION['username'] = $username;
+            $_SESSION['is_admin'] = 0;
+            // print_r($_SESSION);
+            http_response_code(200);
+            return json_encode($_SESSION);
+        } else {
+            http_response_code(409);
+            return "User already exists";
+        }
+
+    // print_r($user);
+
+    }
+
     public function authenticate() {
         session_start();
         if(isset($_SESSION['username'])) {

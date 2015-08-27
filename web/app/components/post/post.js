@@ -32,22 +32,26 @@ import { host } from 'app/services/dataService';
 
 export class Post {
     postForm;
+    message;
     constructor(location: Location, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, http: Http) {
         this.location = location;
         this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.postForm = builder.group({
             'title':    ['', Validators.required],
-            'link':     ['', Validators.required],
-            'imageLink': [''],
+            'url':     ['', Validators.required],
+            'imageUrl': [''],
             'content':  ['', Validators.required],
         });
     }
 
-    submitPost(title, content, link) {
-        return this.http.post(host + '/api/subreddits/' + this.subreddit + '/new', 'title=' + title + '&content=' + content + '&link=' + link, {headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
-        }})
+    submitPost(title, content, url, imageUrl) {
+        return this.http.post(host + '/api/subreddits/' + this.subreddit + '/new',
+            'title=' + title + '&content=' + content + '&url=' + url + '&imageUrl=' + imageUrl, {
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }
+            })
             .toRx()
             .toPromise();
     }

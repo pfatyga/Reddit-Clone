@@ -26,7 +26,12 @@ class SubredditController
         $posts = $this->subredditService->getFrontPage();
 
         header('Content-Type: application/json');
-        return json_encode(array($posts));
+        if($posts) {
+            return json_encode($posts);
+        } else {
+            return null;
+        }
+
 
     }
 
@@ -34,8 +39,8 @@ class SubredditController
         $subreddit = $parameters['name'];
         $title = $_POST['title'];
         $content = $_POST['content'];
-        $link = $_POST['link'];
-        $imageLink = $_POST['imageLink'];
+        $url = $_POST['url'];
+        $imageUrl = $_POST['imageUrl'];
     }
 
     /**

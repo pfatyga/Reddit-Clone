@@ -19,6 +19,11 @@ $config = array(
             'controller' => '\reddit_clone\controllers\SubredditController::GetFrontPage'
         ),
         array(
+            'path' => '/api/signup',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\AuthenticationController::signup'
+        ),
+        array(
             'path' => '/api/login',
             'method' => 'POST',
             'controller' => '\reddit_clone\controllers\AuthenticationController::login'
