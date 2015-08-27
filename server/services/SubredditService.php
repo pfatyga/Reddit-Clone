@@ -130,9 +130,23 @@ class SubredditService
         return $rows;
     }
 
+    public function getPostComments($id) {
+        $stmt = $this->dbConn->prepare('SELECT C.comment_id, timestamp, author, content, parent_comment_id, post_id, CONVERT(COALESCE(SUM(UCV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UCV.type)-SUM(UCV.type), 0), UNSIGNED) AS downVotes FROM comment C LEFT JOIN user_comment_vote UCV ON C.comment_id = UCV.comment_id WHERE C.post_id = ? GROUP BY C.comment_id HAVING C.comment_id IS NOT NULL');
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $rows = array();
+        while($array = $result->fetch_assoc()){
+            $rows[] = $array;
+        }
+
+        return $rows;
+    }
+
     public function getSubredditPost($id) {
         $stmt = $this->dbConn->prepare('SELECT P.post_id, title, content, timestamp, author, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id WHERE P.post_id = ? HAVING P.post_id IS NOT NULL');
-        $stmt->bind_param('s', $id);
+        $stmt->bind_param('i', $id);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -146,6 +160,23 @@ class SubredditService
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $stmt->insert_id;
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
+    public function newComment($subreddit, $post_id, $content, $user) {
+        if($stmt = $this->dbConn->prepare('INSERT INTO comment (author, content, parent_comment_id, post_id) VALUES (?, ?, NULL, ?)')) {
+            if(!$stmt->bind_param('sss', $user, $content, $post_id)) {
+                //echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                //echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                 return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 

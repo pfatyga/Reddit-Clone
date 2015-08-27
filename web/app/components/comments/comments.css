@@ -17,3 +17,16 @@
 .title {
     margin: 8px;
 }
+
+form {
+    width: 40%;
+    margin: 8px;
+}
+
+form > input {
+    margin-top: 8px;
+}
+
+form > textarea {
+    width: 100%;
+}

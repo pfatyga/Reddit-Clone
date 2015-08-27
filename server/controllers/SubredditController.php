@@ -90,6 +90,34 @@ class SubredditController
 
     }
 
+    public function newComment(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $post_id = $parameters['id'];
+            $content = $_POST['content'];
+
+            if(empty($subreddit) || empty($post_id) || empty($content)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $comment_id = $this->subredditService->newComment($subreddit, $post_id, $content, $_SESSION['username']);
+            if($comment_id) {
+                http_response_code(200);
+                return $comment_id;
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+
+    }
+
+
     /**
      * @return string
      */
@@ -135,9 +163,10 @@ class SubredditController
     {
         $post_id = $parameters['id'];
         $post = $this->subredditService->getSubredditPost($post_id);
+        $post['comments'] = $this->subredditService->getPostComments($post_id);
 
-      header('Content-Type: application/json');
-      return json_encode($post);
+        header('Content-Type: application/json');
+        return json_encode($post);
 
     }
 

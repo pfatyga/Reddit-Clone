@@ -82,6 +82,11 @@ $config = array(
             'path' => '/api/subreddits/:name/posts/:id',
             'method' => 'GET',
             'controller' => '\reddit_clone\controllers\SubredditController::getPost'
+        ),
+        array(
+            'path' => '/api/subreddits/:name/posts/:id/new',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\SubredditController::newComment'
         )
     )
 );

@@ -62,7 +62,7 @@ export class Post {
                 var post_id = parseInt(result.text());
                 this.router.parent.navigate('/r/' + this.subreddit + '/' + post_id);
             } else {
-                this.message = result.text();
+                this.router.parent.navigate('/login');
             }
         }.bind(this), function(err) {
             this.message = 'An error occurred: ' + JSON.stringify(err);

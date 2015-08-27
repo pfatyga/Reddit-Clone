@@ -1,4 +1,4 @@
-<div class="post_comments">
+<div *ng-if="!loading" class="post_comments">
     <h1 class="title" href="#" [router-link]="['/subreddit', {name: subreddit}]">/r/{{ subreddit }}</h1>
     <section class="post">
         <header class="post_header">
@@ -9,6 +9,11 @@
             <p> {{ content }} </p>
         </section>
     </section>
+    <form [ng-form-model]="replyForm">
+        <textarea rows="4" cols="1" id="content" ng-control="content"></textarea>
+        <br>
+        <input type="submit" value="Reply" (click)="submit()">
+    </form>
     <section class="comments">
         <comment-list [comments]="comments"></comment-list>
     </section>
