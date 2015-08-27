@@ -36,4 +36,19 @@ class SubredditService
 
     }
 
+    public function newPost($subreddit, $title, $content, $url, $imageUrl, $user) {
+        if($stmt = $this->dbConn->prepare('INSERT INTO post (subreddit, title, content, url, imageUrl, author) VALUES (?, ?, ?, ?, ?, ?)')) {
+            if(!$stmt->bind_param('ssssss', $subreddit, $title, $content, $url, $imageUrl, $user)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $stmt->insert_id;
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
 }

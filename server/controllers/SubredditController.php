@@ -36,11 +36,33 @@ class SubredditController
     }
 
     public function newPost(array $parameters) {
-        $subreddit = $parameters['name'];
-        $title = $_POST['title'];
-        $content = $_POST['content'];
-        $url = $_POST['url'];
-        $imageUrl = $_POST['imageUrl'];
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $url = $_POST['url'];
+            $imageUrl = $_POST['imageUrl'];
+            $user = $_SESSION['username'];
+
+            if(empty($subreddit) || empty($title) || empty($content)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $post_id = $this->subredditService->newPost($subreddit, $title, $content, $url, $imageUrl, $user);
+            if($post_id) {
+                http_response_code(200);
+                return $post_id;
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+
     }
 
     /**

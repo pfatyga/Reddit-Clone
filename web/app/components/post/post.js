@@ -3,7 +3,7 @@ import {
     ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
-import { Location } from 'angular2/router';
+import { Router } from 'angular2/router';
 import {
     FormBuilder,
     Validators,
@@ -33,8 +33,8 @@ import { host } from 'app/services/dataService';
 export class Post {
     postForm;
     message;
-    constructor(location: Location, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, http: Http) {
-        this.location = location;
+    constructor(router: Router, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, http: Http) {
+        this.router = router;
         this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.postForm = builder.group({
@@ -57,12 +57,16 @@ export class Post {
     }
 
     submit() {
-        this.submitPost('blah', 'blah', 'blah').then(function (test) {
-            debugger;
-        }, function (test) {
-            debugger;
-        });
-        this.location.back();
+        this.submitPost(this.postForm.controls.title.value, this.postForm.controls.content.value, this.postForm.controls.url.value, this.postForm.controls.imageUrl.value).then(function (ret) {
+            if(ret.status == 200) {
+                var post_id = parseInt(ret.text());
+                this.router.parent.navigate('/r/' + this.subreddit + '/' + post_id);
+            } else {
+                this.message = ret.text();
+            }
+        }.bind(this), function(err) {
+            this.message = 'An error occurred: ' + JSON.stringify(err);
+        }.bind(this));
     }
 
 }

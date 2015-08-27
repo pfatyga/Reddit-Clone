@@ -72,7 +72,7 @@ class AuthenticationController
 
         if(empty($username) || empty($password) || empty($email)) {
             http_response_code(400);
-            return "Bad Request";
+            return "Missing data";
         }
 
         $success = $this->authenticationService->signupUser($username, $password, $email);
@@ -101,7 +101,6 @@ class AuthenticationController
             http_response_code(404);
             return;
         }
-
     }
 
     public function logout() {
