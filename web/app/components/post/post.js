@@ -3,7 +3,6 @@ import {
     ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
-import { Router } from 'angular2/router';
 import {
     FormBuilder,
     Validators,
@@ -11,10 +10,8 @@ import {
     ControlGroup,
     forms
 } from 'angular2/forms';
-import { RouteParams, RouterLink } from 'angular2/router';
-
-import { Http } from 'http/http';
-import { host } from 'app/services/dataService';
+import { Router, RouteParams, RouterLink } from 'angular2/router';
+import { DataService } from 'app/services/dataService';
 
 // Post component
 @Component({
@@ -22,7 +19,8 @@ import { host } from 'app/services/dataService';
     hostInjector: [FormBuilder],//, DataService],
     viewBindings: [
         FormBuilder
-    ]
+    ],
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/post/post.html',
@@ -33,9 +31,9 @@ import { host } from 'app/services/dataService';
 export class Post {
     postForm;
     message;
-    constructor(router: Router, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder, http: Http) {
+    constructor(dataService: DataService, router: Router, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder) {
+        this.dataService = dataService;
         this.router = router;
-        this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.postForm = builder.group({
             'title':    ['', Validators.required],
@@ -45,24 +43,19 @@ export class Post {
         });
     }
 
-    submitPost(title, content, url, imageUrl) {
-        return this.http.post(host + '/api/subreddits/' + this.subreddit + '/new',
-            'title=' + title + '&content=' + content + '&url=' + url + '&imageUrl=' + imageUrl, {
-                headers: {
-                    'Content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .toRx()
-            .toPromise();
-    }
-
     submit() {
-        this.submitPost(this.postForm.controls.title.value, this.postForm.controls.content.value, this.postForm.controls.url.value, this.postForm.controls.imageUrl.value).then(function (result) {
-            if(result.status == 200) {
+        var title = this.postForm.controls.title.value;
+        var content = this.postForm.controls.content.value;
+        var url = this.postForm.controls.url.value;
+        var imageUrl = this.postForm.controls.imageUrl.value;
+        this.dataService.submitPost(this.subreddit, title, content, url, imageUrl).then(function (result) {
+            if(result.status === 200) {
                 var post_id = parseInt(result.text());
                 this.router.parent.navigate('/r/' + this.subreddit + '/' + post_id);
-            } else {
+            } else if(result.status === 401) {
                 this.router.parent.navigate('/login');
+            } else {
+                this.message = result.text();
             }
         }.bind(this), function(err) {
             this.message = 'An error occurred: ' + JSON.stringify(err);

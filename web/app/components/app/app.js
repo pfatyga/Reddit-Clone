@@ -14,8 +14,8 @@ import {
     Location
 } from 'angular2/router';
 
-import { Http } from 'http/http';
-import { host } from 'app/services/dataService';
+// Services
+import { DataService } from 'app/services/dataService';
 
 // Components
 import { Home } from 'app/components/home/home';
@@ -28,7 +28,8 @@ import { Comments } from 'app/components/comments/comments';
 
 // App component
 @Component({
-    selector: 'app'
+    selector: 'app',
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/app/app.html',
@@ -46,28 +47,22 @@ import { Comments } from 'app/components/comments/comments';
 ])
 export class App {
     user;
-    constructor(router: Router, location: Location, http: Http) {
-        this.router = router;
-        this.location = location;
-        this.http = http;
-        this.getUser();
+    constructor(dataService: DataService) {
+        this.dataService = dataService;
+        this.authenticateUser();
     }
 
     login(userInfo) {
         this.user = userInfo;
     }
 
-    getUser() {
-        // call /api/getUser and set this.user to result
-        this.http.get(host + '/api/authenticateSession')
-            .toRx()
-            .toPromise()
-            .then(function (result) {
-                if(result.status == 200) {
-                    var user = result.json();
-                    this.user = user;
-                }
-            }.bind(this));
+    authenticateUser() {
+        this.dataService.getUser().then(function (result) {
+            if(result.status == 200) {
+                var user = result.json();
+                this.user = user;
+            }
+        }.bind(this));
     }
 
 }

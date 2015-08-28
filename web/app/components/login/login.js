@@ -3,7 +3,6 @@ import {
     ViewMetadata as View
 } from 'angular2/angular2';
 import { Location } from 'angular2/router';
-import { Http } from 'http/http';
 import {
     FormBuilder,
     Validators,
@@ -12,7 +11,7 @@ import {
     forms
 } from 'angular2/forms';
 
-import { host } from 'app/services/dataService';
+import { DataService } from 'app/services/dataService';
 
 import { App } from 'app/components/app/app';
 
@@ -22,7 +21,8 @@ import { App } from 'app/components/app/app';
     hostInjector: [FormBuilder],
     viewBindings: [
         FormBuilder
-    ]
+    ],
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/login/login.html',
@@ -33,9 +33,9 @@ import { App } from 'app/components/app/app';
 export class Login {
     loginForm;
     message;
-    constructor(app: App, location: Location, builder: FormBuilder, http: Http) {
+    constructor(dataService: DataService, app: App, location: Location, builder: FormBuilder) {
+        this.dataService = dataService;
         this.app = app;
-        this.http = http;
         this.location = location;
         this.message = '';
         this.loginForm = builder.group({
@@ -44,16 +44,8 @@ export class Login {
         });
     }
 
-    login(username, password) {
-        return this.http.post(host + '/api/login', 'username=' + username + '&password=' + password, {headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
-        }})
-            .toRx()
-            .toPromise();
-    }
-
     submit() {
-        this.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value).then(function (result) {
+        this.dataService.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value).then(function (result) {
             if(result.status == 200) {
                 var user = result.json();
                 this.app.login(user);

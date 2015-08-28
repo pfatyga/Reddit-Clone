@@ -4,7 +4,6 @@ import {
     Inject,
     NgIf
 } from 'angular2/angular2';
-import { Http } from 'http/http';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
 import {
     FormBuilder,
@@ -13,7 +12,7 @@ import {
     ControlGroup,
     forms
 } from 'angular2/forms';
-import { host } from 'app/services/dataService';
+import { DataService } from 'app/services/dataService';
 
 import { CommentList } from 'app/components/common/comment-list/comment-list';
 
@@ -23,7 +22,8 @@ import { CommentList } from 'app/components/common/comment-list/comment-list';
     hostInjector: [FormBuilder],//, DataService],
     viewBindings: [
         FormBuilder
-    ]
+    ],
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/comments/comments.html',
@@ -33,10 +33,10 @@ import { CommentList } from 'app/components/common/comment-list/comment-list';
 export class Comments {
     loading;
     replyForm;
-    constructor(router: Router, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder,  http: Http) {
+    constructor(dataService: DataService, router: Router, @Inject(RouteParams) routeParams: RouteParams, builder: FormBuilder) {
+        this.dataService = dataService;
         this.loading = true;
         this.router = router;
-        this.http = http;
         this.subreddit = routeParams.params.subreddit;
         this.post_id = routeParams.params.post_id;
         this.replyForm = builder.group({
@@ -48,7 +48,7 @@ export class Comments {
     }
 
     refresh() {
-        this.getPost(this.subreddit, this.post_id).subscribe(function (post) {
+        this.dataService.getPost(this.subreddit, this.post_id).subscribe(function (post) {
             this.post = post;
             this.title = post.title;
             this.content = post.content;
@@ -61,28 +61,13 @@ export class Comments {
         }.bind(this));
     }
 
-    getPost(subreddit, post_id) {
-        return this.http.get(host + '/api/subreddits/' + subreddit + '/posts/' + post_id)
-            .toRx()
-            .map(res => res.json());
-    }
 
-    submitReply(content) {
-        return this.http.post(host + '/api/subreddits/' + this.subreddit + '/posts/' + this.post_id + '/new',
-            'content=' + content, {
-                headers: {
-                    'Content-type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .toRx()
-            .toPromise();
-    }
 
     submit() {
-        this.submitReply(this.replyForm.controls.content.value).then(function (result) {
-            if(result.status == 200) {
+        this.dataService.replyPost(this.subreddit, this.post_id, this.replyForm.controls.content.value).then(function (result) {
+            if(result.status === 200) {
                 this.refresh();
-            } else {
+            } else if(result.status === 401) {
                 this.router.parent.navigate('/login');
             }
         }.bind(this), function(err) {

@@ -3,7 +3,6 @@ import {
     ViewMetadata as View
 } from 'angular2/angular2';
 import { Location } from 'angular2/router';
-import { Http } from 'http/http';
 import {
     FormBuilder,
     Validators,
@@ -11,7 +10,7 @@ import {
     ControlGroup,
     forms
 } from 'angular2/forms';
-import { host } from 'app/services/dataService';
+import { DataService } from 'app/services/dataService';
 import { App } from 'app/components/app/app';
 
 // Signup component
@@ -20,7 +19,8 @@ import { App } from 'app/components/app/app';
     hostInjector: [FormBuilder],//, DataService],
     viewBindings: [
         FormBuilder
-    ]
+    ],
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/signup/signup.html',
@@ -31,9 +31,9 @@ import { App } from 'app/components/app/app';
 export class Signup {
     signupForm;
     message;
-    constructor(app: App, location: Location, builder: FormBuilder, http: Http) {
+    constructor(dataService: DataService, app: App, location: Location, builder: FormBuilder) {
+        this.dataService = dataService;
         this.app = app;
-        this.http = http;
         this.location = location;
         this.message = '';
         this.signupForm = builder.group({
@@ -43,16 +43,8 @@ export class Signup {
         });
     }
 
-    signup(username, password, email) {
-        return this.http.post(host + '/api/signup', 'username=' + username + '&password=' + password + '&email=' + email, {headers: {
-            'Content-type': 'application/x-www-form-urlencoded'
-        }})
-            .toRx()
-            .toPromise();
-    }
-
     submit() {
-        this.signup(this.signupForm.controls.username.value, this.signupForm.controls.password.value, this.signupForm.controls.email.value).then(function (result) {
+        this.dataService.signup(this.signupForm.controls.username.value, this.signupForm.controls.password.value, this.signupForm.controls.email.value).then(function (result) {
             if(result.status == 200) {
                 var user = result.json();
                 this.app.login(user);

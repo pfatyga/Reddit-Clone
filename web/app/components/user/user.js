@@ -4,14 +4,14 @@ import {
     Inject
 } from 'angular2/angular2';
 import { RouteParams, RouterLink } from 'angular2/router';
-import { Http } from 'http/http';
-import { host } from 'app/services/dataService';
+import { DataService } from 'app/services/dataService';
 import { PostList } from 'app/components/common/post-list/post-list';
 import { CommentList } from 'app/components/common/comment-list/comment-list';
 
 // Subreddit component
 @Component({
-    selector: 'user'
+    selector: 'user',
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/user/user.html',
@@ -19,21 +19,13 @@ import { CommentList } from 'app/components/common/comment-list/comment-list';
     directives: [CommentList, PostList, RouterLink]
 })
 export class User {
-
-    constructor(@Inject(RouteParams) routeParams: RouteParams, http: Http) {
-        this.http = http;
+    constructor(dataService: DataService, @Inject(RouteParams) routeParams: RouteParams) {
+        this.dataService = dataService;
         this.user = routeParams.params.name;
-        this.getUser(this.user).subscribe(function(user) {
+        this.dataService.getUserSummary(this.user).subscribe(function(user) {
+            this.name = user.username;
             this.posts = user.posts;
             this.comments = user.comments;
-            this.name = user.username;
         }.bind(this));
     }
-
-    getUser(name) {
-        return this.http.get(host + '/api/users/' + name)
-            .toRx()
-            .map(res => res.json());
-    }
-
 }

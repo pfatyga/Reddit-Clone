@@ -3,12 +3,15 @@ import {
     ViewMetadata as View,
     Inject
 } from 'angular2/angular2';
-import { RouteParams, RouterLink } from 'angular2/router';
+import { Router, RouteParams, RouterLink } from 'angular2/router';
+import { Http } from 'http/http';
+import { DataService } from 'app/services/dataService';
 
 // PostItem component
 @Component({
     selector: 'post-item',
-    properties: ['post']
+    properties: ['post'],
+    bindings: [DataService]
 })
 @View({
     templateUrl: 'app/components/common/post-list/post-item.html',
@@ -17,7 +20,9 @@ import { RouteParams, RouterLink } from 'angular2/router';
 })
 export class PostItem {
 
-    constructor() {
+    constructor(router: Router, http: Http) {
+        this.router = router;
+        this.http = http;
     }
 
     voteUp() {

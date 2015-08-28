@@ -45,17 +45,14 @@ class SubredditService
     public function addModerator($subreddit, $username) {
         if($stmt = $this->dbConn->prepare('INSERT INTO user_subreddit_moderator (username, subreddit) VALUES (?, ?)')) {
             if(!$stmt->bind_param('ss', $username, $subreddit)) {
-                echo 'a';
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
-                echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
-                return false;//
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 
             return true;
         } else {
-            echo 'c';
             return false;//"Prepare statement failed";
         }
     }
@@ -172,11 +169,9 @@ class SubredditService
     public function newComment($subreddit, $post_id, $content, $user) {
         if($stmt = $this->dbConn->prepare('INSERT INTO comment (author, content, parent_comment_id, post_id) VALUES (?, ?, NULL, ?)')) {
             if(!$stmt->bind_param('sss', $user, $content, $post_id)) {
-                //echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
-                //echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                 return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 
