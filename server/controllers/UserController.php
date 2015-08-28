@@ -31,17 +31,23 @@ class UserController
     public function getUser(array $parameters)
     {
         $username = $parameters['username'];
-        $user = $this->userService->getUserByUsername($username);
+        if($this->userService->userExists($username)) {
 
-        if (is_null($user))
-        {
+            $posts = $this->userService->getUserPosts($username);
+            $comments = $this->userService->getUserComments($username);
+
+            $user = array(
+                'username' => $username,
+                'posts' => $posts,
+                'comments' => $comments
+            );
+
             header('Content-Type: application/json');
-            return null;
+            return json_encode($user);
+        } else {
+            http_response_code(404);
+            return;
         }
-
-        http_response_code(200);
-        header('Content-Type: application/json');
-        return json_encode($user->toArray());
     }
 
     /**
