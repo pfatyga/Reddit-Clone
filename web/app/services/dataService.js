@@ -87,4 +87,17 @@ export class DataService {
             .map(res => res.json());
     }
 
+    // post-item
+    upVotePost(subreddit, post_id) {
+        return this.http.post(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id + '/upvote')
+            .toRx()
+            .toPromise();
+    }
+
+    downVotePost(subreddit, post_id) {
+        return this.http.post(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id + '/downvote')
+            .toRx()
+            .toPromise();
+    }
+
 };

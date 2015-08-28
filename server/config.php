@@ -87,6 +87,16 @@ $config = array(
             'path' => '/api/subreddits/:name/posts/:id/new',
             'method' => 'POST',
             'controller' => '\reddit_clone\controllers\SubredditController::newComment'
+        ),
+        array(
+            'path' => '/api/subreddits/:name/posts/:id/upvote',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\SubredditController::upVotePost'
+        ),
+        array(
+            'path' => '/api/subreddits/:name/posts/:id/downvote',
+            'method' => 'POST',
+            'controller' => '\reddit_clone\controllers\SubredditController::downVotePost'
         )
     )
 );

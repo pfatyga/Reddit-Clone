@@ -38,6 +38,13 @@ class SubredditService
             $rows[] = $array;
         }
 
+        usort($rows, function ($a, $b) {
+            $aVotes = $a['upVotes'] - $a['downVotes'];
+            $bVotes = $b['upVotes'] - $b['downVotes'];
+
+            return $bVotes - $aVotes;
+        });
+
         return $rows;
 
     }
@@ -124,6 +131,13 @@ class SubredditService
             $rows[] = $array;
         }
 
+        usort($rows, function ($a, $b) {
+            $aVotes = $a['upVotes'] - $a['downVotes'];
+            $bVotes = $b['upVotes'] - $b['downVotes'];
+
+            return $bVotes - $aVotes;
+        });
+
         return $rows;
     }
 
@@ -176,6 +190,36 @@ class SubredditService
             }
 
             return $stmt->insert_id;
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
+    public function upVotePost($post_id, $user) {
+        if($stmt = $this->dbConn->prepare('INSERT INTO user_post_vote (username, post_id, type) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE type=1')) {
+            if(!$stmt->bind_param('si', $user, $post_id)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $this->getSubredditPost($post_id);
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
+    public function downVotePost($post_id, $user) {
+        if($stmt = $this->dbConn->prepare('INSERT INTO user_post_vote (username, post_id, type) VALUES (?, ?, 0) ON DUPLICATE KEY UPDATE type=0')) {
+            if(!$stmt->bind_param('si', $user, $post_id)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $this->getSubredditPost($post_id);
         } else {
             return false;//"Prepare statement failed";
         }

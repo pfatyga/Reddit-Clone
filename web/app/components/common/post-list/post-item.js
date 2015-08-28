@@ -4,7 +4,6 @@ import {
     Inject
 } from 'angular2/angular2';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
-import { Http } from 'http/http';
 import { DataService } from 'app/services/dataService';
 
 // PostItem component
@@ -20,16 +19,32 @@ import { DataService } from 'app/services/dataService';
 })
 export class PostItem {
 
-    constructor(router: Router, http: Http) {
+    constructor(dataService: DataService, router: Router) {
+        this.dataService = dataService;
         this.router = router;
-        this.http = http;
     }
 
     voteUp() {
-        this.post.upVotes++;
+        this.dataService.upVotePost(this.post.subreddit, this.post.post_id).then(function (result) {
+            if(result.status === 200) {
+                var post = result.json();
+                this.post.upVotes = post.upVotes;
+                this.post.downVotes = post.downVotes;
+            } else if(result.status === 401) {
+                this.router.parent.navigate('/login');
+            }
+        }.bind(this));
     }
 
     voteDown() {
-        this.post.downVotes++;
+        this.dataService.downVotePost(this.post.subreddit, this.post.post_id).then(function (result) {
+            if(result.status === 200) {
+                var post = result.json();
+                this.post.upVotes = post.upVotes;
+                this.post.downVotes = post.downVotes;
+            } else if(result.status === 401) {
+                this.router.parent.navigate('/login');
+            }
+        }.bind(this));
     }
 }

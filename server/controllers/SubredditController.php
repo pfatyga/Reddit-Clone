@@ -117,6 +117,56 @@ class SubredditController
 
     }
 
+    public function upVotePost(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $post_id = $parameters['id'];
+
+            if(empty($subreddit) || empty($post_id)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $post = $this->subredditService->upVotePost($post_id, $_SESSION['username']);
+            if($post) {
+                http_response_code(200);
+                return json_encode($post);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+    }
+
+    public function downVotePost(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $post_id = $parameters['id'];
+
+            if(empty($subreddit) || empty($post_id)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $post = $this->subredditService->downVotePost($post_id, $_SESSION['username']);
+            if($post) {
+                http_response_code(200);
+                return json_encode($post);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+    }
+
 
     /**
      * @return string
