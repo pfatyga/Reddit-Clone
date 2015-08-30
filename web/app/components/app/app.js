@@ -56,6 +56,14 @@ export class App {
         this.user = userInfo;
     }
 
+    logout() {
+        this.dataService.logout().then(function (result) {
+            if(result.status == 200) {
+                this.user = null;
+            }
+        }.bind(this));
+    }
+
     authenticateUser() {
         this.dataService.getUser().then(function (result) {
             if(result.status == 200) {

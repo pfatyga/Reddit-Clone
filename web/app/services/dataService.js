@@ -33,6 +33,12 @@ export class DataService {
             .toPromise();
     }
 
+    logout() {
+        return this.http.get(this.host + '/api/logout')
+            .toRx()
+            .toPromise();
+    }
+
     signup(username, password, email) {
         return this.http.post(this.host + '/api/signup', 'username=' + username + '&password=' + password + '&email=' + email, {headers: {
             'Content-type': 'application/x-www-form-urlencoded'

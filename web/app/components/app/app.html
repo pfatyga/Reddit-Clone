@@ -6,8 +6,10 @@
                 |
                 <a href="#" class="login" [router-link]="['/login']">Login</a>
             </span>
-            <span class="auth" *ng-if="!!user">
+            <span class="auth" *ng-if="user">
                 Welcome <a href="#" class="user" [router-link]="['/user', {name: user.username}]">{{ user.username }}</a>
+                |
+                <a (click)="logout()">Logout</a>
             </span>
             <a href="#" [router-link]="['/home']" class="title">Leddit</a>
         </header>
