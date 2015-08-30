@@ -29,7 +29,7 @@ class SubredditService
 
     public function getFrontpage()
     {
-        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, timestamp, author, url, imageUrl, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id GROUP BY P.post_id HAVING P.post_id IS NOT NULL');
+        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, P.timestamp, P.author, url, imageUrl, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes, COUNT(C.comment_id) AS numComments FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id LEFT JOIN comment C ON P.post_id = C.post_id GROUP BY P.post_id HAVING P.post_id IS NOT NULL');
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -121,7 +121,7 @@ class SubredditService
     }
 
     public function getSubredditPosts($subreddit) {
-        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, timestamp, author, url, imageUrl, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id WHERE P.subreddit = ? GROUP BY P.post_id HAVING P.post_id IS NOT NULL');
+        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, P.timestamp, P.author, url, imageUrl, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes, COUNT(C.comment_id) AS numComments FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id LEFT JOIN comment C ON P.post_id = C.post_id WHERE P.subreddit = ? GROUP BY P.post_id HAVING P.post_id IS NOT NULL');
         $stmt->bind_param('s', $subreddit);
         $stmt->execute();
 
