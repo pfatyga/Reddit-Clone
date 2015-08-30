@@ -88,7 +88,8 @@ class UserService
     }
 
 
-    public function userExists($username) {
+    public function userExists($username)
+    {
         $stmt = $this->dbConn->prepare('SELECT * FROM user WHERE user.username = ?');
         $stmt->bind_param('s', $username);
         $stmt->execute();
@@ -96,8 +97,27 @@ class UserService
         return $stmt->get_result()->num_rows > 0;
     }
 
-    public function getUserPosts($user) {
-        $stmt = $this->dbConn->prepare('SELECT P.post_id, title, timestamp, author, url, imageUrl, subreddit, CONVERT(COALESCE(SUM(UPV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UPV.type)-SUM(UPV.type), 0), UNSIGNED) AS downVotes FROM post P LEFT JOIN user_post_vote UPV ON P.post_id = UPV.post_id WHERE P.author = ? GROUP BY P.post_id HAVING P.post_id IS NOT NULL');
+    public function getUserPosts($user)
+    {
+        $sql = 'SELECT P.*, CONVERT(COALESCE(upVotes, 0), UNSIGNED) as upVotes, CONVERT(COALESCE(downVotes, 0), UNSIGNED) as downVotes, CONVERT(COALESCE(numComments, 0), UNSIGNED) as numComments
+                FROM post P
+                LEFT JOIN comment C
+                ON P.post_id = C.post_id
+                LEFT JOIN (
+                    SELECT UPV.post_id, SUM(UPV.type) AS upVotes, COUNT(UPV.type)-SUM(UPV.type) AS downVotes
+                	FROM user_post_vote UPV
+                	GROUP BY UPV.post_id) votes
+                ON P.post_id = votes.post_id
+                LEFT JOIN (
+                    SELECT C.post_id as post_id, COUNT(C.post_id) as numComments
+                    FROM comment C
+                    GROUP BY C.post_id) comments
+                ON P.post_id = comments.post_id
+                WHERE P.author = ?
+                GROUP BY P.post_id
+                HAVING P.post_id IS NOT NULL';
+
+        $stmt = $this->dbConn->prepare($sql);
         $stmt->bind_param('s', $user);
         $stmt->execute();
 
@@ -110,8 +130,17 @@ class UserService
         return $rows;
     }
 
-    public function getUserComments($user) {
-        $stmt = $this->dbConn->prepare('SELECT C.comment_id, timestamp, author, content, parent_comment_id, post_id, CONVERT(COALESCE(SUM(UCV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UCV.type)-SUM(UCV.type), 0), UNSIGNED) AS downVotes FROM comment C LEFT JOIN user_comment_vote UCV ON C.comment_id = UCV.comment_id WHERE C.author = ? GROUP BY C.comment_id HAVING C.comment_id IS NOT NULL');
+    public function getUserComments($user)
+    {
+        $sql = 'SELECT C.*, CONVERT(COALESCE(SUM(UCV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UCV.type)-SUM(UCV.type), 0), UNSIGNED) AS downVotes
+                FROM comment C
+                LEFT JOIN user_comment_vote UCV
+                ON C.comment_id = UCV.comment_id
+                WHERE C.author = ?
+                GROUP BY C.comment_id
+                HAVING C.comment_id IS NOT NULL';
+
+        $stmt = $this->dbConn->prepare($sql);
         $stmt->bind_param('s', $user);
         $stmt->execute();
 

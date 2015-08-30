@@ -28,7 +28,11 @@ class AuthenticationService
 
     public function userExists($username)
     {
-        $stmt = $this->dbConn->prepare('SELECT user.username, user.is_admin FROM user WHERE user.username = ?');
+        $sql = 'SELECT user.username, user.is_admin
+                FROM user
+                WHERE user.username = ?';
+
+        $stmt = $this->dbConn->prepare($sql);
         $stmt->bind_param('s', $username);
         $stmt->execute();
 
@@ -37,7 +41,11 @@ class AuthenticationService
 
     public function getUser($username, $password)
     {
-        $stmt = $this->dbConn->prepare('SELECT user.username, user.is_admin FROM user WHERE user.username = ? AND user.password = ?');
+        $sql = 'SELECT user.username, user.is_admin
+                FROM user
+                WHERE user.username = ? AND user.password = ?';
+
+        $stmt = $this->dbConn->prepare($sql);
         $stmt->bind_param('ss', $username, $password);
         $stmt->execute();
 
@@ -45,8 +53,12 @@ class AuthenticationService
 
     }
 
-    public function signupUser($username, $password, $email) {
-        if($stmt = $this->dbConn->prepare('INSERT INTO user (username, password, email, is_admin) VALUES (?, ?, ?, 0)')) {
+    public function signupUser($username, $password, $email)
+    {
+        $sql = 'INSERT INTO user (username, password, email, is_admin)
+                VALUES (?, ?, ?, 0)';
+
+        if($stmt = $this->dbConn->prepare($sql)) {
             if(!$stmt->bind_param('sss', $username, $password, $email)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
