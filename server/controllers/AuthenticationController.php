@@ -75,8 +75,8 @@ class AuthenticationController
             return "Missing data";
         }
 
-        $success = $this->authenticationService->signupUser($username, $password, $email);
-        if($success) {
+        if(!$this->authenticationService->userExists($username)) {
+            $this->authenticationService->signupUser($username, $password, $email);
             session_start();
             $_SESSION['username'] = $username;
             $_SESSION['is_admin'] = 0;
@@ -87,8 +87,6 @@ class AuthenticationController
             http_response_code(409);
             return "User already exists";
         }
-
-    // print_r($user);
 
     }
 

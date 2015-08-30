@@ -26,6 +26,15 @@ class AuthenticationService
          $this->dbConn = mysqli_connect($config['db']['host'], $config['db']['username'], $config['db']['password'], $config['db']['name']);
      }
 
+    public function userExists($username)
+    {
+        $stmt = $this->dbConn->prepare('SELECT user.username, user.is_admin FROM user WHERE user.username = ?');
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+
+        return $stmt->get_result()->num_rows > 0;
+    }
+
     public function getUser($username, $password)
     {
         $stmt = $this->dbConn->prepare('SELECT user.username, user.is_admin FROM user WHERE user.username = ? AND user.password = ?');
