@@ -33,6 +33,13 @@ main {
     text-align: center;
 }
 
+.app-footer > div {
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 131px);
+    padding: 8px;
+}
+
 .auth {
     float: right;
 }
