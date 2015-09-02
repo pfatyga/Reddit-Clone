@@ -228,7 +228,7 @@ class SubredditService
         return $rows;
     }
 
-    public function getSubredditPost($id)
+    public function getPost($id)
     {
         $sql = 'SELECT P.*, CONVERT(COALESCE(upVotes, 0), UNSIGNED) as upVotes, CONVERT(COALESCE(downVotes, 0), UNSIGNED) as downVotes, CONVERT(COALESCE(numComments, 0), UNSIGNED) as numComments
                 FROM post P
@@ -247,6 +247,25 @@ class SubredditService
                 WHERE P.post_id = ?
                 GROUP BY P.post_id
                 HAVING P.post_id IS NOT NULL';
+
+        $stmt = $this->dbConn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
+    }
+
+    public function getComment($id)
+    {
+        $sql = 'SELECT C.comment_id, timestamp, author, content, parent_comment_id, post_id, CONVERT(COALESCE(SUM(UCV.type), 0), UNSIGNED) AS upVotes, CONVERT(COALESCE(COUNT(UCV.type)-SUM(UCV.type), 0), UNSIGNED) AS downVotes
+                FROM comment C
+                LEFT JOIN user_comment_vote UCV
+                ON C.comment_id = UCV.comment_id
+                WHERE C.comment_id = ?
+                GROUP BY C.comment_id
+                HAVING C.comment_id IS NOT NULL';
 
         $stmt = $this->dbConn->prepare($sql);
         $stmt->bind_param('i', $id);
@@ -277,7 +296,7 @@ class SubredditService
         }
     }
 
-    public function newComment($subreddit, $post_id, $content, $user)
+    public function newCommentR($subreddit, $post_id, $content, $user)
     {
         $sql = 'INSERT INTO comment (author, content, parent_comment_id, post_id, timestamp)
                 VALUES (?, ?, NULL, ?, ?)';
@@ -285,6 +304,26 @@ class SubredditService
         if($stmt = $this->dbConn->prepare($sql)) {
             $datetime = date("Y-m-d H:i:s");
             if(!$stmt->bind_param('ssss', $user, $content, $post_id, $datetime)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $stmt->insert_id;
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
+    public function newCommentReply($subreddit, $post_id, $parent_comment_id, $content, $user)
+    {
+        $sql = 'INSERT INTO comment (author, content, parent_comment_id, post_id, timestamp)
+                VALUES (?, ?, ?, ?, ?)';
+
+        if($stmt = $this->dbConn->prepare($sql)) {
+            $datetime = date("Y-m-d H:i:s");
+            if(!$stmt->bind_param('sssss', $user, $content, $parent_comment_id, $post_id, $datetime)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
@@ -311,7 +350,7 @@ class SubredditService
                 return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 
-            return $this->getSubredditPost($post_id);
+            return $this->getPost($post_id);
         } else {
             return false;//"Prepare statement failed";
         }
@@ -331,7 +370,7 @@ class SubredditService
                 return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
             }
 
-            return $this->getSubredditPost($post_id);
+            return $this->getPost($post_id);
         } else {
             return false;//"Prepare statement failed";
         }

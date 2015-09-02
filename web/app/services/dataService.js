@@ -66,6 +66,18 @@ export class DataService {
             .toPromise();
     }
 
+    //reply to comment
+    replyComment(subreddit, post_id, comment_id, content) {
+        return this.http.post(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id + '/comments/' + comment_id + '/new',
+            'content=' + content, {
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .toRx()
+            .toPromise();
+    }
+
     getFrontPage() {
         return this.http.get(this.host + '/api/posts')
             .toRx()
