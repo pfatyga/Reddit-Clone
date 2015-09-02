@@ -106,11 +106,12 @@ class SubredditService
 
     public function createSubreddit($subreddit)
     {
-        $sql = 'INSERT INTO subreddit (name)
-                VALUES (?)';
+        $sql = 'INSERT INTO subreddit (name, timestamp)
+                VALUES (?, ?)';
 
         if($stmt = $this->dbConn->prepare($sql)) {
-            if(!$stmt->bind_param('s', $subreddit)) {
+            $datetime = date("Y-m-d H:i:s");
+            if(!$stmt->bind_param('ss', $subreddit, $datetime)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
@@ -258,11 +259,12 @@ class SubredditService
 
     public function newPost($subreddit, $title, $content, $url, $imageUrl, $user)
     {
-        $sql = 'INSERT INTO post (subreddit, title, content, url, imageUrl, author)
-                VALUES (?, ?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO post (subreddit, title, content, url, imageUrl, author, timestamp)
+                VALUES (?, ?, ?, ?, ?, ?, ?)';
 
         if($stmt = $this->dbConn->prepare($sql)) {
-            if(!$stmt->bind_param('ssssss', $subreddit, $title, $content, $url, $imageUrl, $user)) {
+            $datetime = date("Y-m-d H:i:s");
+            if(!$stmt->bind_param('sssssss', $subreddit, $title, $content, $url, $imageUrl, $user, $datetime)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
@@ -277,11 +279,12 @@ class SubredditService
 
     public function newComment($subreddit, $post_id, $content, $user)
     {
-        $sql = 'INSERT INTO comment (author, content, parent_comment_id, post_id)
-                VALUES (?, ?, NULL, ?)';
+        $sql = 'INSERT INTO comment (author, content, parent_comment_id, post_id, timestamp)
+                VALUES (?, ?, NULL, ?, ?)';
 
         if($stmt = $this->dbConn->prepare($sql)) {
-            if(!$stmt->bind_param('sss', $user, $content, $post_id)) {
+            $datetime = date("Y-m-d H:i:s");
+            if(!$stmt->bind_param('ssss', $user, $content, $post_id, $datetime)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
