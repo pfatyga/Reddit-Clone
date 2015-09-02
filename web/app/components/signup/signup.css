@@ -8,10 +8,7 @@ form {
 }
 
 .signup {
-    position: absolute;
-    left: 50%;
-    margin-left: -200px;
-
+    margin: 0 auto;
     width: 400px;
     border: 2px solid #ccc;
     padding: 10px 40px 25px;
