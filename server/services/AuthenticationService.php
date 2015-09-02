@@ -41,25 +41,34 @@ class AuthenticationService
 
     public function getUser($username, $password)
     {
-        $sql = 'SELECT user.username, user.is_admin
+        $sql = 'SELECT user.username, user.is_admin, user.password
                 FROM user
-                WHERE user.username = ? AND user.password = ?';
+                WHERE user.username = ?';
 
         $stmt = $this->dbConn->prepare($sql);
-        $stmt->bind_param('ss', $username, $password);
+        $stmt->bind_param('s', $username);
         $stmt->execute();
 
-        return $stmt->get_result()->fetch_assoc();
-
+        $user = $stmt->get_result()->fetch_assoc();
+        if (password_verify($password, $user['password'])) {
+            return [
+                'username' => $user['username'],
+                'is_admin' => $user['is_admin']
+            ];
+        } else {
+            return null;
+        }
     }
 
     public function signupUser($username, $password, $email)
     {
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
         $sql = 'INSERT INTO user (username, password, email, is_admin)
                 VALUES (?, ?, ?, 0)';
 
         if($stmt = $this->dbConn->prepare($sql)) {
-            if(!$stmt->bind_param('sss', $username, $password, $email)) {
+            if(!$stmt->bind_param('sss', $username, $hashedPassword, $email)) {
                 return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
             }
             if (!$stmt->execute()) {
