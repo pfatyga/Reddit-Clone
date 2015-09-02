@@ -296,7 +296,7 @@ class SubredditService
         }
     }
 
-    public function newCommentR($subreddit, $post_id, $content, $user)
+    public function newComment($subreddit, $post_id, $content, $user)
     {
         $sql = 'INSERT INTO comment (author, content, parent_comment_id, post_id, timestamp)
                 VALUES (?, ?, NULL, ?, ?)';

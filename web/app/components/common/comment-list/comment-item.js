@@ -46,7 +46,6 @@ export class CommentItem {
     }
 
     submit() {
-        debugger;
         this.dataService.replyComment(this.postInfo.subreddit, this.postInfo.post_id, this.comment.comment_id, this.replyForm.controls.content.value).then(function (result) {
             if(result.status === 200) {
                 var comment = result.json();
