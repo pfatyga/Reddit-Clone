@@ -13,7 +13,14 @@
             {{ comment.content }}
         </section>
         <section>
-            <a href="#">Reply</a>
+            <a (click)="toggleReply()">Reply</a>
         </section>
     </div>
+</div>
+<div *ng-if="reply" class="reply">
+    <form [ng-form-model]="replyForm">
+        <textarea rows="4" cols="1" id="content" ng-control="content"></textarea>
+        <br>
+        <input type="submit" value="Reply" (click)="submit()">
+    </form>
 </div>

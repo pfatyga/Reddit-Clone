@@ -19,7 +19,7 @@ import { CommentList } from 'app/components/common/comment-list/comment-list';
 // Comments component
 @Component({
     selector: 'comments',
-    hostInjector: [FormBuilder],//, DataService],
+    hostInjector: [FormBuilder],
     viewBindings: [
         FormBuilder
     ],
