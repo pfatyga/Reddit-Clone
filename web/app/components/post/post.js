@@ -16,7 +16,7 @@ import { DataService } from 'app/services/dataService';
 // Post component
 @Component({
     selector: 'post',
-    hostInjector: [FormBuilder],//, DataService],
+    hostInjector: [FormBuilder],
     viewBindings: [
         FormBuilder
     ],

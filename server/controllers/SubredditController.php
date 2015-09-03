@@ -117,6 +117,36 @@ class SubredditController
 
     }
 
+    public function newCommentReply(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $post_id = $parameters['post_id'];
+            $comment_id = $parameters['comment_id'];
+            $content = $_POST['content'];
+
+            if(empty($subreddit) || empty($post_id) || empty($content)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $comment_id = $this->subredditService->newCommentReply($subreddit, $post_id, $comment_id, $content, $_SESSION['username']);
+            if($comment_id) {
+                $comment = $this->subredditService->getComment($comment_id);
+                http_response_code(200);
+                header('Content-Type: application/json');
+                return json_encode($comment);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+
+    }
+
     public function upVotePost(array $parameters) {
         session_start();
         if(isset($_SESSION['username'])) {
@@ -131,6 +161,7 @@ class SubredditController
             $post = $this->subredditService->upVotePost($post_id, $_SESSION['username']);
             if($post) {
                 http_response_code(200);
+                header('Content-Type: application/json');
                 return json_encode($post);
             } else {
                 http_response_code(500);
@@ -156,6 +187,7 @@ class SubredditController
             $post = $this->subredditService->downVotePost($post_id, $_SESSION['username']);
             if($post) {
                 http_response_code(200);
+                header('Content-Type: application/json');
                 return json_encode($post);
             } else {
                 http_response_code(500);
@@ -212,7 +244,7 @@ class SubredditController
     public function getPost(array $parameters)
     {
         $post_id = $parameters['id'];
-        $post = $this->subredditService->getSubredditPost($post_id);
+        $post = $this->subredditService->getPost($post_id);
         $post['comments'] = $this->subredditService->getPostComments($post_id);
 
         header('Content-Type: application/json');

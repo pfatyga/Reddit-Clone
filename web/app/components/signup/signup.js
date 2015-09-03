@@ -16,7 +16,7 @@ import { App } from 'app/components/app/app';
 // Signup component
 @Component({
     selector: 'signup',
-    hostInjector: [FormBuilder],//, DataService],
+    hostInjector: [FormBuilder],
     viewBindings: [
         FormBuilder
     ],
