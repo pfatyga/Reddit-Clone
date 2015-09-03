@@ -55,6 +55,14 @@ Virtual host config (change DocumentRoot and Directory to location of project's 
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
+    
+[Instructions for setting virtual host on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-ubuntu-14-04-lts)
+
+Add leddit.com to `/etc/hosts`:
+
+    127.0.0.1       leddit.com
+
+Restart apache (`sudo service apache2 restart`) and go to `leddit.com` in web browser.
 
 ## Directory Layout
 
