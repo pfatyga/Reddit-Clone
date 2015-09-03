@@ -241,11 +241,63 @@ class SubredditController
 
     }
 
+    private function commentTreeInternal($comment, &$comments) {
+        // echo "Running on ";
+        // print_r($comment);
+        // echo "\n";
+        if(($key = array_search($comment, $comments)) !== false) {
+            unset($comments[$key]);
+        }
+
+        $childComments = array();
+
+        //get the comments that are children of $comment
+        foreach ($comments as $c) {
+            if(isset($c["parent_comment_id"]) && $c["parent_comment_id"] == $comment["comment_id"]) {
+                $childComments[] = $c;
+            }
+        }
+
+        // echo "Found children:\n";
+        // print_r($childComments);
+
+        //remove those children comments from the array
+        foreach ($childComments as $childComment) {
+            if(($key = array_search($childComment, $comments)) !== false) {
+                unset($comments[$key]);
+            }
+        }
+
+        //run this algorithm on those children recursively
+        foreach ($childComments as $key => $childComment) {
+            $childComments[$key] = $this->commentTreeInternal($childComment, $comments);
+        }
+
+        //set the children with their children attached as the children of this comment
+        if(!empty($childComments)) {
+            $comment["children"] = $childComments;
+        }
+
+
+        return $comment;
+
+    }
+
+    private function constructCommentTree($comments) {
+        $done = array();
+        while(!empty($comments)) {
+            $done[] = $this->commentTreeInternal(array_values($comments)[0], $comments);
+        }
+        return $done;
+    }
+
+
     public function getPost(array $parameters)
     {
         $post_id = $parameters['id'];
         $post = $this->subredditService->getPost($post_id);
-        $post['comments'] = $this->subredditService->getPostComments($post_id);
+
+        $post['comments'] = $this->constructCommentTree($this->subredditService->getPostComments($post_id));
 
         header('Content-Type: application/json');
         return json_encode($post);

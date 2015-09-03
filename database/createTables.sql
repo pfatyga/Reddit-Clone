@@ -39,8 +39,7 @@
         parent_comment_id INT,
         PRIMARY KEY (comment_id),
         FOREIGN KEY (author) REFERENCES user(username),
-        FOREIGN KEY (post_id) REFERENCES post(post_id),
-        FOREIGN KEY (parent_comment_id) REFERENCES comment(comment_id)
+        FOREIGN KEY (post_id) REFERENCES post(post_id)
     );
 
     DROP TABLE IF EXISTS user_post_vote;

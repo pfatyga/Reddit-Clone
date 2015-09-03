@@ -3,7 +3,7 @@ import {
     ViewMetadata as View,
     NgIf
 } from 'angular2/angular2';
-import { RouteParams, RouterLink } from 'angular2/router';
+import { Router, RouteParams, RouterLink } from 'angular2/router';
 import {
     FormBuilder,
     Validators,
@@ -32,10 +32,11 @@ import { Comments } from 'app/components/comments/comments';
 export class CommentItem {
     reply;
     replyForm;
-    constructor(dataService: DataService, builder: FormBuilder, comments: Comments) {
+    constructor(dataService: DataService, router: Router, builder: FormBuilder, comments: Comments) {
         this.postInfo = comments;
         this.reply = false;
         this.dataService = dataService;
+        this.router = router;
         this.replyForm = builder.group({
             'content':  ['', Validators.required],
         });
