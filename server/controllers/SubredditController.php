@@ -199,6 +199,58 @@ class SubredditController
         }
     }
 
+    public function upVoteComment(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $comment_id = $parameters['comment_id'];
+
+            if(empty($subreddit) || empty($comment_id)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $comment = $this->subredditService->upVoteComment($comment_id, $_SESSION['username']);
+            if($comment) {
+                http_response_code(200);
+                header('Content-Type: application/json');
+                return json_encode($comment);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+    }
+
+    public function downVoteComment(array $parameters) {
+        session_start();
+        if(isset($_SESSION['username'])) {
+            $subreddit = $parameters['name'];
+            $comment_id = $parameters['comment_id'];
+
+            if(empty($subreddit) || empty($comment_id)) {
+                http_response_code(400);
+                return "Missing data";
+            }
+
+            $comment = $this->subredditService->downVoteComment($comment_id, $_SESSION['username']);
+            if($comment) {
+                http_response_code(200);
+                header('Content-Type: application/json');
+                return json_encode($comment);
+            } else {
+                http_response_code(500);
+                return "Something failed";
+            }
+        } else {
+            http_response_code(401);
+            return;
+        }
+    }
+
 
     /**
      * @return string

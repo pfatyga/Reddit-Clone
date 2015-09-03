@@ -118,4 +118,17 @@ export class DataService {
             .toPromise();
     }
 
+    // comment-item
+    upVoteComment(subreddit, post_id, comment_id) {
+        return this.http.post(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id + '/comments/' + comment_id + '/upvote')
+            .toRx()
+            .toPromise();
+    }
+
+    downVoteComment(subreddit, post_id, comment_id) {
+        return this.http.post(this.host + '/api/subreddits/' + subreddit + '/posts/' + post_id + '/comments/' + comment_id + '/downvote')
+            .toRx()
+            .toPromise();
+    }
+
 };

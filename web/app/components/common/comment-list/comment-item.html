@@ -1,9 +1,9 @@
 <div class="comment-item">
     <div>
         <span class="votes">
-            <div class="upvote"><i class="fa fa-caret-up"></i></div>
-            <div>1</div>
-            <div class="downvote"><i class="fa fa-caret-down"></i></div>
+            <div class="upvote"><i (click)="voteUp()" class="fa fa-caret-up"></i></div>
+            <div>{{ comment.upVotes - comment.downVotes }}</div>
+            <div class="downvote"><i (click)="voteDown()" class="fa fa-caret-down"></i></div>
         </span>
         <section>
             <a href="#" [router-link]="['/user', {name: comment.author}]">{{ comment.author }}</a>

@@ -60,4 +60,28 @@ export class CommentItem {
         }.bind(this));
     }
 
+    voteUp() {
+        this.dataService.upVoteComment(this.postInfo.subreddit, this.postInfo.post_id, this.comment.comment_id).then(function (result) {
+            if(result.status === 200) {
+                var comment = result.json();
+                this.comment.upVotes = comment.upVotes;
+                this.comment.downVotes = comment.downVotes;
+            } else if(result.status === 401) {
+                this.router.parent.navigate('/login');
+            }
+        }.bind(this));
+    }
+
+    voteDown() {
+        this.dataService.downVoteComment(this.postInfo.subreddit, this.postInfo.post_id, this.comment.comment_id).then(function (result) {
+            if(result.status === 200) {
+                var comment = result.json();
+                this.comment.upVotes = comment.upVotes;
+                this.comment.downVotes = comment.downVotes;
+            } else if(result.status === 401) {
+                this.router.parent.navigate('/login');
+            }
+        }.bind(this));
+    }
+
 }

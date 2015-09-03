@@ -376,4 +376,44 @@ class SubredditService
         }
     }
 
+    public function upVoteComment($comment_id, $user)
+    {
+        $sql = 'INSERT INTO user_comment_vote (username, comment_id, type)
+                VALUES (?, ?, 1)
+                ON DUPLICATE KEY UPDATE type=1';
+
+        if($stmt = $this->dbConn->prepare($sql)) {
+            if(!$stmt->bind_param('si', $user, $comment_id)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $this->getComment($comment_id);
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
+    public function downVoteComment($comment_id, $user)
+    {
+        $sql = 'INSERT INTO user_comment_vote (username, comment_id, type)
+                VALUES (?, ?, 0)
+                ON DUPLICATE KEY UPDATE type=0';
+
+        if($stmt = $this->dbConn->prepare($sql)) {
+            if(!$stmt->bind_param('si', $user, $comment_id)) {
+                return false;//"Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+            if (!$stmt->execute()) {
+                return false;//"Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+            }
+
+            return $this->getComment($comment_id);
+        } else {
+            return false;//"Prepare statement failed";
+        }
+    }
+
 }
